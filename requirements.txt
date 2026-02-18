@@ -1,0 +1,18 @@
+# Web Framework
+streamlit
+
+# Data Manipulation
+pandas
+numpy
+
+# Visualization
+plotly
+
+# Interpretability & Machine Learning
+interpret
+scikit-learn
+
+# Utilities (usually built-in, but good for environment consistency)
+setuptools
+
+missingno
