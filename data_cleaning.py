@@ -22,6 +22,17 @@ def load_data(file_path="data/fractionation_data.csv", cache_buster=None):
     """
     try:
         df = pd.read_csv(file_path)
+
+        # Force known categorical columns to object dtype even if encoded numerically
+        forced_categorical = (
+            get_equipment_columns()
+            + get_lot_number_columns()
+            + get_manual_categorical_columns()
+        )
+        for col in forced_categorical:
+            if col in df.columns:
+                df[col] = df[col].astype('object')
+
         return df
     except FileNotFoundError:
         st.error(f"File '{file_path}' not found. Please ensure it is in the correct directory.")
