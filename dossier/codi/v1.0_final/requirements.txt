@@ -20,4 +20,3 @@ missingno
 nbformat
 
 xgboost
-scipy

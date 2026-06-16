@@ -1,0 +1,25 @@
+\section{Conclusions i Treball Futur}
+
+Aquest treball demostra la viabilitat tècnica i operativa d'una metodologia d'industrialització de la Root Cause Analysis basada en models ML interpretables en entorns farmacèutics regulats. La proposta integra preparació de dades, modelització per fases, explicabilitat nativa i criteris de validació en un marc coherent, reproduïble i orientat a decisió.
+
+\textbf{Conclusions principals:}
+
+\begin{itemize}
+  \item L'estratègia \emph{filter-then-interact} amb EBM millora consistentment el rendiment respecte al baseline Lasso (reducció 15.6\% MAE, 16.9\% RMSE).
+  \item La configuració \textbf{Robust (Leaf=10)} ofereix el millor compromís entre precisió (MAE = 0.950), estabilitat i aplicabilitat industrial, prioritzant robustesa davant R² lleugerament inferior a Fase 3.
+  \item La interpretabilitat nativa d'EBM facilita la priorització de causes potencials i accelera la formulació d'hipòtesis RCA, reduint l'espai de recerca i millorant l'eficiència investigadora.
+  \item El sistema és especialment útil com a eina de suport en contextos de producció amb alta exigència de traçabilitat, connectant potencial analític del ML amb necessitats operatives de qualitat farmacèutica.
+\end{itemize}
+
+Tanmateix, com s'analitza a la Secció~\ref{subsubsec:marc_validacio_gxp}, el treball constitueix el pas previ tècnic necessari abans d'una validació GxP formal (IQ/OQ/PQ): els fonaments —interpretabilitat, traçabilitat i monitoratge— hi són, però la qualificació reguladora i l'aprovació QA resten com a treball futur.
+
+\textbf{Línies de treball futur:}
+
+\begin{itemize}
+  \item \textbf{Validació formal GxP:} executar IQ/OQ/PQ i integrar en cicle de validació corporatiu.
+  \item \textbf{Ampliació i qualitat de dades:} incrementar cobertura temporal i validar en nous escenaris de producció.
+  \item \textbf{Monitoratge i governança:} desplegar seguiment de deriva, versionat, protocols de recalibratge i reentrenament amb aprovacions QA.
+  \item \textbf{Integració operativa:} connectar priorització RCA amb fluxos de desviacions, CAPA i sistemes MES/LIMS.
+\end{itemize}
+
+Com a conclusió final, la proposta constitueix una base sòlida, escalable i auditable per a la implantació progressiva d'un sistema RCA assistit per ML en entorns regulats, confirmant que és possible evolucionar des d'un RCA qualitatiu cap a un enfoc híbrid, sistemàtic i data-driven, mantenint l'expertesa humana com a element central de validació i decisió final.

@@ -1,0 +1,25 @@
+\section{Estat de l'art}
+
+\subsection{RCA tradicional i limitacions en entorns data-rich}
+
+Les metodologies clàssiques de RCA (5 Whys, Ishikawa, FMEA) han estat àmpliament utilitzades en la indústria farmacèutica per estructurar investigacions de desviació. Tanmateix, diversos treballs evidencien limitacions quan el volum i heterogeneïtat de dades augmenten: dependència elevada del coneixement tàcit, baixa repetibilitat entre equips i dificultat per capturar interaccions multivariants complexes.
+
+En entorns GxP, l'RCA requereix evidència auditable i justificació de decisions. Per això, l'objectiu no és automatitzar la decisió final, sinó reforçar la capacitat d'anàlisi de l'equip investigador amb eines quantitatives que prioritzin hipòtesis de manera transparent.
+
+\subsection{Machine Learning i explicabilitat per a qualitat de processos}
+
+En els darrers anys, l'aplicació de ML en qualitat farmacèutica ha crescut en casos com detecció d'anomalies, manteniment predictiu i predicció de lots fora d'especificació, utilitzant models com \emph{random forest}, \emph{gradient boosting} \cite{xgboost} o xarxes neuronals. Tanmateix, en escenaris RCA regulats, una bona mètrica predictiva és condició necessària però no suficient: cal demostrar robustesa, estabilitat temporal i, especialment, interpretabilitat operativa \cite{doshi2017rigorous,rudin2021fundamental}.
+
+Les tècniques XAI (SHAP \cite{shap_arxiv1705}, LIME \cite{lime_arxiv1602}) han permès avançar en la transformació de prediccions en hipòtesis investigables, actuant com a mecanisme de \textbf{priorització d'hipòtesis} per reduir l'espai de recerca. Diversos treballs destaquen la diferència entre models orientats al rendiment i models interpretable-by-design que, amb compromís moderat en exactitud, faciliten la justificació de resultats i adopció en processos de qualitat.
+
+\subsection{Explainable Boosting Machines: estat actual}
+
+Els \emph{Explainable Boosting Machines} (EBM) representen una extensió moderna dels \emph{Generalized Additive Models} (GAMs) \cite{hastie1990_gam} que combina interpretabilitat nativa amb capacitat predictiva competitiva. Els treballs de Lou et al. \cite{lou2013_ga2m} i Caruana et al. \cite{caruana2015_intelligible} van establir les bases dels models GA2M (GAMs amb interaccions de parell), demostrant que és possible capturar interaccions controlades mantenint una estructura additiva llegible.
+
+La literatura recent mostra que els EBM assoleixen rendiment comparable a \emph{Random Forest} o \emph{Boosted Trees}, amb l'avantatge d'un funcionament intern directament explicable \cite{ebm_nori,piml_ebm,ebm_2025}. A diferència dels models \emph{black box}, l'EBM pertany a la família \emph{glass box} i permet descriure explícitament la contribució de cada variable i interacció a la predicció, facilitant la comunicació amb experts de domini i la seva adopció en contextos on la transparència és crítica.
+
+\subsection{Industrialització i validació en entorns GxP}
+
+La literatura de regulació digital i validació de sistemes computaritzats (GAMP 5 \cite{gamp5}, ALCOA+ \cite{alcoa}) estableix la necessitat de definir l'ús previst, control de canvis, traçabilitat de dades/models i monitoratge continu del rendiment per garantir que una solució ML sigui defensable en auditoria. Diversos treballs destaquen també el risc de \emph{drift} \cite{lu2020drift} i la necessitat de governança del cicle de vida del model.
+
+Com a síntesi, l'estat de l'art mostra que existeixen peces madures (RCA estructurat, modelització predictiva, XAI, qualitat de dades), però manca sovint una metodologia integral que les uneixi de forma operativa i compatible amb entorns regulats. Aquesta és precisament la bretxa que aborda el present treball: utilitzar un model interpretable-by-design com l'EBM per prioritzar hipòtesis de causa arrel amb criteris tècnics, traçables i alineats amb requisits GxP.

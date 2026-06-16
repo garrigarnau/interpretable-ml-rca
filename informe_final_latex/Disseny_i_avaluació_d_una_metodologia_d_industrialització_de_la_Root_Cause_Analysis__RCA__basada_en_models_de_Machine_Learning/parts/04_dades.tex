@@ -1,0 +1,25 @@
+\section{Dades}
+
+\subsection{Context del dataset}
+
+El conjunt de dades integra informació de producció, control de qualitat, sensors de procés i metadades operatives d'un procés de fraccionament de plasma humà. Es disposa de \textbf{4.600 lots} al llarg de \textbf{9 anys}, amb \textbf{150 paràmetres} agrupats en blocs funcionals: variables de procés (temperatura, pressió, temps), qualitat (potència, impureses), context operatiu (torn, operador, equip), manteniment i marques temporals.
+
+El cas d'estudi tracta del procés industrial de fraccionament de plasma humà, que té com a objectiu separar proteïnes terapèutiques de gran valor. Aquest procés es basa en el mètode de fraccionament amb etanol en fred desenvolupat per Cohn, que utilitza canvis controlats de pH, temperatura i concentració d'etanol per separar diferents proteïnes \cite{cohn1946,burnouf2007_modern}. Tot i que actualment el procés inclou etapes avançades de purificació, el rendiment i la seguretat del producte depenen principalment de les primeres etapes de separació \cite{burnouf2007_modern}.
+
+Aquest treball se centra en la producció fins a l'obtenció de la Fracció II+III, on es concentra la major part de les immunoglobulines (IgG). El tram analitzat inclou tres fases clau: (1) separació inicial, que inclou la descongelació del plasma i la recuperació del crioprecipitat, amb el temps de barreja (\emph{pooling}) i l'edat del plasma com a factors més rellevants; (2) precipitació de proteïnes, on se separen les Fraccions I i II+III mitjançant l'addició d'etanol i l'ajust del pH, etapa en què són crítics la precisió en l'addició d'etanol, el control del pH i el temps de mescla; i (3) filtració i recuperació, que es realitza amb filtres premsa i papers de diferent gruix, i determina el rendiment final (\emph{yield}) i la claredat del filtrat \cite{burnouf2007_modern,cohn1946}.
+
+El procés és altament variable perquè el plasma és una matèria primera biològica i les proteïnes són especialment sensibles als canvis de temperatura i a les condicions químiques \cite{burnouf2007_modern,gamp5}. En aquest context, petites variacions en paràmetres operatius com la pressió de les centrífugues, la quantitat de tampó afegit o el temps de filtració poden afectar directament la recuperació de la IgG i la qualitat del producte final. Per aquest motiu, és necessari utilitzar eines avançades d'anàlisi de causes arrel (RCA), que permetin reduir la variabilitat del procés i prioritzar les investigacions, assegurant el compliment de la normativa GxP.
+
+A partir del \textbf{2024} s'observa un canvi de procés que coincideix amb una millora del \emph{yield}. Atesa la no-estacionarietat del procés, l'entrenament es focalitza en dades \textbf{des de 2024} (\textbf{960 lots}) per garantir homogeneïtat operacional. Del total de 150 variables, \textbf{104 són numèriques} i \textbf{46 categòriques}.
+
+\subsection{Qualitat de dades, neteja i preparació}
+
+La neteja no s'ha fet de manera mecànica, sinó amb criteri de domini i validació experta, alineant-se amb la literatura sobre interpretabilitat i selecció de variables en contextos industrials \cite{nori2019_unified,guyon2003_feature_selection,liu2021_missing_industrial,boloncanedo2015_review}. S'han analitzat valors absents per variable i causa operacional, correlacions fortes per evitar redundàncies i multicol·linearitat, variables de variància baixa amb aportació limitada, i variables temporals amb baixa utilitat causal directa.
+
+S'ha construït un mapa de variables per documentar descripció funcional, fase del procés, naturalesa accionable i relacions entre variables. Cada variable inclou atributs com descripció, fase, accionabilitat i correlacions, facilitant la separació de variables operatives, informatives i descriptives.
+
+També s'han aplicat transformacions de \emph{feature engineering}, substituint marques temporals puntuals per durades agregades més robustes (p.~ex. temps total de fase), reduint soroll i concentrant el model en factors rellevants del comportament de procés.
+
+\subsection{Partició temporal i govern de dades}
+
+La partició de dades es realitza cronològicament dins del període 2024+ per evitar fuites d'informació. El dataset final conté \textbf{956 mostres i 56 variables}. Per garantir traçabilitat \emph{end-to-end}, s'ha establert versionat de datasets, diccionari de dades i registre de transformacions.

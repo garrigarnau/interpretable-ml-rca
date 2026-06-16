@@ -1,0 +1,1119 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Estudi TFG — RCA amb ML · Arnau Garriga</title>
+<style>
+  :root {
+    --bg: #0f1117;
+    --surface: #181c27;
+    --surface2: #1f2436;
+    --border: #2a3050;
+    --accent: #4f8ef7;
+    --accent2: #7c5cbf;
+    --accent3: #2ec4b6;
+    --warn: #f5a623;
+    --danger: #e05252;
+    --success: #3ddc84;
+    --text: #e8ecf4;
+    --text-muted: #8892b0;
+    --text-dim: #4a5578;
+    --mono: 'Courier New', monospace;
+    --sans: 'Segoe UI', system-ui, sans-serif;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--sans);
+    font-size: 15px;
+    line-height: 1.65;
+  }
+
+  /* ── HEADER ── */
+  header {
+    background: linear-gradient(135deg, #0f1117 0%, #1a1f35 50%, #0f1117 100%);
+    border-bottom: 1px solid var(--border);
+    padding: 32px 40px 28px;
+    position: sticky; top: 0; z-index: 100;
+  }
+  .header-inner { max-width: 1100px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+  .header-title { font-size: 13px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--accent); }
+  .header-sub { font-size: 18px; font-weight: 600; color: var(--text); margin-top: 2px; }
+  .header-meta { font-size: 12px; color: var(--text-muted); margin-top: 4px; }
+  .progress-bar { width: 200px; height: 4px; background: var(--border); border-radius: 2px; overflow: hidden; }
+  .progress-fill { height: 100%; background: linear-gradient(90deg, var(--accent), var(--accent3)); width: 0%; transition: width .3s; }
+
+  /* ── LAYOUT ── */
+  .container { max-width: 1100px; margin: 0 auto; padding: 32px 24px; }
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+  .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+  @media (max-width: 768px) { .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; } }
+
+  /* ── SECTION NAV ── */
+  .section-nav { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 32px; }
+  .nav-btn {
+    padding: 6px 14px; border-radius: 20px; font-size: 12px; font-weight: 600;
+    cursor: pointer; border: 1px solid var(--border); background: var(--surface);
+    color: var(--text-muted); transition: all .2s; letter-spacing: .04em;
+  }
+  .nav-btn:hover, .nav-btn.active { background: var(--accent); border-color: var(--accent); color: #fff; }
+
+  /* ── CARDS ── */
+  .card {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 10px; padding: 20px; margin-bottom: 16px;
+  }
+  .card-accent { border-left: 3px solid var(--accent); }
+  .card-warn { border-left: 3px solid var(--warn); }
+  .card-success { border-left: 3px solid var(--success); }
+  .card-danger { border-left: 3px solid var(--danger); }
+  .card-purple { border-left: 3px solid var(--accent2); }
+
+  .card h3 { font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: .1em; color: var(--accent); margin-bottom: 12px; }
+  .card h4 { font-size: 14px; font-weight: 600; color: var(--text); margin-bottom: 8px; }
+
+  /* ── SECTION ── */
+  .section { display: none; }
+  .section.active { display: block; }
+  .section-title {
+    font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .15em;
+    color: var(--text-dim); margin-bottom: 6px;
+  }
+  .section-heading {
+    font-size: 26px; font-weight: 700; color: var(--text);
+    margin-bottom: 24px; border-bottom: 1px solid var(--border); padding-bottom: 16px;
+  }
+
+  /* ── METRIC BOXES ── */
+  .metric-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px,1fr)); gap: 12px; margin: 16px 0; }
+  .metric {
+    background: var(--surface2); border-radius: 8px; padding: 16px 12px; text-align: center;
+    border: 1px solid var(--border);
+  }
+  .metric .val { font-size: 26px; font-weight: 700; font-family: var(--mono); color: var(--accent); }
+  .metric .lbl { font-size: 11px; color: var(--text-muted); margin-top: 4px; text-transform: uppercase; letter-spacing: .07em; }
+  .metric .delta { font-size: 12px; color: var(--success); margin-top: 2px; font-weight: 600; }
+  .metric .delta.neg { color: var(--danger); }
+
+  /* ── TABLE ── */
+  .tbl-wrap { overflow-x: auto; margin: 12px 0; border-radius: 8px; border: 1px solid var(--border); }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  thead tr { background: var(--surface2); }
+  th { padding: 10px 14px; text-align: left; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .07em; color: var(--text-muted); white-space: nowrap; }
+  td { padding: 9px 14px; border-top: 1px solid var(--border); color: var(--text); }
+  tr:hover td { background: var(--surface2); }
+  .best td { color: var(--success); font-weight: 600; }
+  .tag { display: inline-block; padding: 2px 8px; border-radius: 10px; font-size: 11px; font-weight: 700; }
+  .tag-blue { background: rgba(79,142,247,.15); color: var(--accent); }
+  .tag-green { background: rgba(61,220,132,.15); color: var(--success); }
+  .tag-warn { background: rgba(245,166,35,.15); color: var(--warn); }
+  .tag-red { background: rgba(224,82,82,.15); color: var(--danger); }
+  .tag-purple { background: rgba(124,92,191,.15); color: var(--accent2); }
+
+  /* ── TIMELINE / PHASES ── */
+  .phase-flow { display: flex; gap: 0; margin: 20px 0; overflow-x: auto; padding-bottom: 8px; }
+  .phase-step {
+    flex: 1; min-width: 140px; padding: 16px 12px; text-align: center;
+    background: var(--surface2); border: 1px solid var(--border); position: relative;
+  }
+  .phase-step:not(:last-child)::after {
+    content: '→'; position: absolute; right: -12px; top: 50%; transform: translateY(-50%);
+    color: var(--accent); font-size: 16px; z-index: 1;
+  }
+  .phase-step:first-child { border-radius: 8px 0 0 8px; }
+  .phase-step:last-child { border-radius: 0 8px 8px 0; }
+  .phase-step .num { font-size: 11px; color: var(--text-dim); font-weight: 700; text-transform: uppercase; letter-spacing: .1em; }
+  .phase-step .name { font-size: 13px; font-weight: 700; color: var(--text); margin: 4px 0; }
+  .phase-step .score { font-size: 12px; color: var(--accent3); font-family: var(--mono); }
+
+  /* ── Q&A ── */
+  .qa-item { border: 1px solid var(--border); border-radius: 8px; margin-bottom: 10px; overflow: hidden; }
+  .qa-q {
+    padding: 14px 18px; cursor: pointer; background: var(--surface);
+    display: flex; justify-content: space-between; align-items: center;
+    font-weight: 600; font-size: 14px; user-select: none;
+    transition: background .15s;
+  }
+  .qa-q:hover { background: var(--surface2); }
+  .qa-q .chevron { color: var(--accent); font-size: 12px; transition: transform .2s; flex-shrink: 0; margin-left: 12px; }
+  .qa-item.open .chevron { transform: rotate(180deg); }
+  .qa-a {
+    display: none; padding: 14px 18px 16px;
+    background: var(--surface2); border-top: 1px solid var(--border);
+    font-size: 14px; line-height: 1.7; color: var(--text);
+  }
+  .qa-item.open .qa-a { display: block; }
+  .qa-a strong { color: var(--accent); }
+  .qa-a code { background: var(--bg); padding: 1px 6px; border-radius: 4px; font-family: var(--mono); font-size: 12px; color: var(--accent3); }
+  .qa-a ul, .qa-a ol { margin: 8px 0 8px 20px; }
+  .qa-a li { margin-bottom: 4px; }
+  .qa-cat { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .1em; color: var(--text-dim); margin: 20px 0 8px; }
+
+  /* ── FORMULA ── */
+  .formula {
+    background: var(--bg); border: 1px solid var(--border); border-radius: 8px;
+    padding: 16px 20px; margin: 12px 0; font-family: var(--mono); font-size: 14px;
+    color: var(--accent3); overflow-x: auto;
+  }
+
+  /* ── HIGHLIGHT BOX ── */
+  .highlight {
+    background: rgba(79,142,247,.07); border: 1px solid rgba(79,142,247,.25);
+    border-radius: 8px; padding: 14px 18px; margin: 12px 0; font-size: 14px;
+  }
+  .highlight.warn { background: rgba(245,166,35,.07); border-color: rgba(245,166,35,.3); }
+  .highlight.success { background: rgba(61,220,132,.07); border-color: rgba(61,220,132,.3); }
+  .highlight.danger { background: rgba(224,82,82,.07); border-color: rgba(224,82,82,.3); }
+
+  /* ── COMPARISON BARS ── */
+  .bar-row { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
+  .bar-label { font-size: 12px; color: var(--text-muted); width: 160px; flex-shrink: 0; }
+  .bar-track { flex: 1; height: 8px; background: var(--surface2); border-radius: 4px; overflow: hidden; }
+  .bar-fill { height: 100%; border-radius: 4px; transition: width 1s ease; }
+  .bar-val { font-size: 12px; font-family: var(--mono); color: var(--text); width: 50px; text-align: right; }
+
+  /* ── LAYERS ── */
+  .layer-stack { display: flex; flex-direction: column; gap: 8px; margin: 16px 0; }
+  .layer {
+    padding: 14px 18px; border-radius: 8px; border: 1px solid var(--border);
+    display: flex; align-items: center; gap: 16px;
+  }
+  .layer-num { font-size: 22px; font-weight: 900; color: var(--accent); width: 32px; flex-shrink: 0; font-family: var(--mono); }
+  .layer-name { font-size: 14px; font-weight: 700; color: var(--text); }
+  .layer-desc { font-size: 13px; color: var(--text-muted); margin-top: 2px; }
+
+  /* ── BADGES ── */
+  .badge-row { display: flex; flex-wrap: wrap; gap: 8px; margin: 10px 0; }
+  .badge { padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 600; border: 1px solid; }
+
+  /* ── PILL STAT ── */
+  .pill-stats { display: flex; flex-wrap: wrap; gap: 8px; margin: 12px 0; }
+  .pill { background: var(--surface2); border: 1px solid var(--border); border-radius: 6px; padding: 6px 14px; font-size: 13px; }
+  .pill span { color: var(--accent); font-weight: 700; font-family: var(--mono); }
+
+  /* ── REFS ── */
+  .ref-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  @media (max-width: 600px) { .ref-grid { grid-template-columns: 1fr; } }
+  .ref-item { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 12px 14px; font-size: 12px; }
+  .ref-num { color: var(--accent); font-weight: 700; font-family: var(--mono); margin-right: 6px; }
+  .ref-title { color: var(--text); font-weight: 600; }
+  .ref-author { color: var(--text-muted); margin-top: 2px; }
+
+  p { margin-bottom: 10px; }
+  .mb-8 { margin-bottom: 8px; }
+  .mt-16 { margin-top: 16px; }
+  .text-muted { color: var(--text-muted); font-size: 13px; }
+  .text-mono { font-family: var(--mono); }
+  .divider { border: none; border-top: 1px solid var(--border); margin: 20px 0; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <div>
+      <div class="header-title">TFG · Enginyeria de Dades · UAB · 2025/26</div>
+      <div class="header-sub">Industrialització de la RCA basada en ML</div>
+      <div class="header-meta">Arnau Garriga Torné &nbsp;·&nbsp; Tutor: Joan Piedrafita &nbsp;·&nbsp; Juny 2026</div>
+    </div>
+    <div>
+      <div style="font-size:11px;color:var(--text-muted);margin-bottom:6px;text-align:right">Progrés d'estudi</div>
+      <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+    </div>
+  </div>
+</header>
+
+<div class="container">
+
+  <!-- NAV -->
+  <nav class="section-nav" id="mainNav">
+    <button class="nav-btn active" data-sec="resum">📋 Resum</button>
+    <button class="nav-btn" data-sec="context">🏭 Context</button>
+    <button class="nav-btn" data-sec="dades">📊 Dades</button>
+    <button class="nav-btn" data-sec="metodologia">⚙️ Metodologia</button>
+    <button class="nav-btn" data-sec="resultats">📈 Resultats</button>
+    <button class="nav-btn" data-sec="interpretabilitat">🔍 Explicabilitat</button>
+    <button class="nav-btn" data-sec="industrialitzacio">🚀 Industrialització</button>
+    <button class="nav-btn" data-sec="qa">❓ Preguntes</button>
+    <button class="nav-btn" data-sec="refs">📚 Referències</button>
+  </nav>
+
+  <!-- ═══════════════════════════════════════════
+       SECCIÓ 1: RESUM EXECUTIU
+  ════════════════════════════════════════════ -->
+  <section class="section active" id="sec-resum">
+    <div class="section-title">Secció 1</div>
+    <h2 class="section-heading">Resum Executiu</h2>
+
+    <div class="card card-accent">
+      <h3>Contribució Principal</h3>
+      <p>Proposta i validació d'una <strong>metodologia d'industrialització de la RCA</strong> (Root Cause Analysis) basada en models de ML interpretables per a entorns farmacèutics regulats (GMP/QMS). Demostra que una estratègia <strong>EBM interpretable-by-design</strong> pot combinar rendiment predictiu, traçabilitat i utilitat operativa.</p>
+    </div>
+
+    <div class="metric-grid">
+      <div class="metric">
+        <div class="val">956</div>
+        <div class="lbl">Mostres (lots)</div>
+      </div>
+      <div class="metric">
+        <div class="val">56</div>
+        <div class="lbl">Variables finals</div>
+      </div>
+      <div class="metric">
+        <div class="val">5</div>
+        <div class="lbl">Folds CV</div>
+      </div>
+      <div class="metric">
+        <div class="val">0.950</div>
+        <div class="lbl">MAE millor config</div>
+        <div class="delta">↓15.6% vs Lasso</div>
+      </div>
+      <div class="metric">
+        <div class="val">1.368</div>
+        <div class="lbl">RMSE millor config</div>
+        <div class="delta">↓16.9% vs Lasso</div>
+      </div>
+      <div class="metric">
+        <div class="val">0.422</div>
+        <div class="lbl">R² Robust</div>
+        <div class="delta">↑27.1% vs Lasso</div>
+      </div>
+    </div>
+
+    <div class="grid-2" style="margin-top:16px">
+      <div class="card card-success">
+        <h3>5 Capes de la Metodologia</h3>
+        <div class="layer-stack">
+          <div class="layer" style="background:rgba(79,142,247,.05)">
+            <div class="layer-num">1</div>
+            <div><div class="layer-name">Anàlisi Exploratòria</div><div class="layer-desc">EDA, detecció d'outliers, correlacions, qualitat de dades</div></div>
+          </div>
+          <div class="layer" style="background:rgba(124,92,191,.05)">
+            <div class="layer-num">2</div>
+            <div><div class="layer-name">Modelització ML</div><div class="layer-desc">Lasso baseline, Gradient Boosting, EBM</div></div>
+          </div>
+          <div class="layer" style="background:rgba(46,196,182,.05)">
+            <div class="layer-num">3</div>
+            <div><div class="layer-name">Filter-then-Interact (EBM)</div><div class="layer-desc">3 fases progressives: efectes principals → filtrat → interaccions</div></div>
+          </div>
+          <div class="layer" style="background:rgba(245,166,35,.05)">
+            <div class="layer-num">4</div>
+            <div><div class="layer-name">Explicabilitat (XAI)</div><div class="layer-desc">Shape functions, contribucions locals, importància global</div></div>
+          </div>
+          <div class="layer" style="background:rgba(61,220,132,.05)">
+            <div class="layer-num">5</div>
+            <div><div class="layer-name">Validació i Industrialització</div><div class="layer-desc">Robustesa, drift monitoring, integració MES/GMP</div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>5 Objectius del Treball</h3>
+        <ol style="margin-left:18px;line-height:2">
+          <li>Definir un marc RCA data-driven alineat amb requisits GxP</li>
+          <li>Construir un pipeline de dades reproduïble</li>
+          <li>Desenvolupar models ML interpretables per predir desviacions</li>
+          <li>Aplicar tècniques d'explicabilitat per prioritzar hipòtesis RCA</li>
+          <li>Proposar una arquitectura d'industrialització i validació</li>
+        </ol>
+        <hr class="divider">
+        <h3>Paraules Clau</h3>
+        <div class="badge-row">
+          <span class="badge" style="border-color:var(--accent);color:var(--accent)">Root Cause Analysis</span>
+          <span class="badge" style="border-color:var(--accent2);color:var(--accent2)">EBM</span>
+          <span class="badge" style="border-color:var(--accent3);color:var(--accent3)">Interpretabilitat</span>
+          <span class="badge" style="border-color:var(--warn);color:var(--warn)">Cross-validation</span>
+          <span class="badge" style="border-color:var(--success);color:var(--success)">GMP/QMS</span>
+          <span class="badge" style="border-color:var(--text-muted);color:var(--text-muted)">Qualitat farmacèutica</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="card card-warn" style="margin-top:8px">
+      <h3>⚠️ Limitació Important (R²)</h3>
+      <p>Els valors de R² <strong>no són directament comparables</strong> entre taules. La Taula 1 i la Taula 2 usen <strong>validació creuada 5-fold</strong> (R²=0.470 per EBM Fase 3), mentre que la Taula 3 usa un <strong>test set fix de 242 mostres</strong> (R²=0.477 per EBM filter+interact). Valors coherents però protocols d'avaluació diferents.</p>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════
+       SECCIÓ 2: CONTEXT
+  ════════════════════════════════════════════ -->
+  <section class="section" id="sec-context">
+    <div class="section-title">Secció 2</div>
+    <h2 class="section-heading">Context i Estat de l'Art</h2>
+
+    <div class="grid-2">
+      <div class="card card-accent">
+        <h3>Procés Farmacèutic Analitzat</h3>
+        <p><strong>Fraccionament de plasma humà</strong> fins a l'obtenció de la <strong>Fracció II+III</strong> (immunoglobulines IgG). Mètode de Cohn: canvis controlats de pH, temperatura i concentració d'etanol.</p>
+        <hr class="divider">
+        <h4>3 Fases Clau del Procés</h4>
+        <div class="phase-flow">
+          <div class="phase-step">
+            <div class="num">Fase 1</div>
+            <div class="name">Separació inicial</div>
+            <div class="score">Descongelació + crioprecipitat</div>
+          </div>
+          <div class="phase-step">
+            <div class="num">Fase 2</div>
+            <div class="name">Precipitació</div>
+            <div class="score">Fraccions I i II+III</div>
+          </div>
+          <div class="phase-step">
+            <div class="num">Fase 3</div>
+            <div class="name">Filtració</div>
+            <div class="score">Yield final (D49)</div>
+          </div>
+        </div>
+        <div class="highlight warn">
+          <strong>Variable objectiu:</strong> D49 = yield de la Fracció II+III (%). Petites desviacions en paràmetres operatius afecten directament la recuperació de IgG.
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>Limitacions de la RCA Tradicional</h3>
+        <ul style="margin-left:18px;line-height:2;font-size:14px">
+          <li>Dependència elevada del <strong>coneixement tàcit</strong></li>
+          <li>Baixa repetibilitat entre equips investigadors</li>
+          <li>Dificultat per capturar <strong>interaccions multivariants</strong></li>
+          <li>Escalabilitat limitada amb volums de dades alts</li>
+          <li>Inconsistència temporal entre investigadors</li>
+        </ul>
+        <div class="highlight" style="margin-top:12px">
+          <strong>Solució proposada:</strong> No automatitzar la decisió final, sinó <em>reforçar</em> la capacitat d'anàlisi de l'equip expert amb eines quantitatives transparents (human-in-the-loop).
+        </div>
+      </div>
+    </div>
+
+    <div class="grid-2" style="margin-top:8px">
+      <div class="card card-purple">
+        <h3>EBM: Explainable Boosting Machines</h3>
+        <p>Extensió moderna dels <strong>GAMs</strong> (Generalized Additive Models, Hastie & Tibshirani 1990) que combina interpretabilitat nativa amb capacitat predictiva competitiva.</p>
+        <div class="formula">f(x) = β₀ + Σᵢ fᵢ(xᵢ) + Σᵢⱼ fᵢⱼ(xᵢ, xⱼ)</div>
+        <p class="text-muted">Models <strong>GA2M</strong> (Lou et al. 2013, Caruana et al. 2015): interaccions de parell mantenint estructura additiva llegible.</p>
+        <div class="badge-row">
+          <span class="tag tag-green">Glass-box</span>
+          <span class="tag tag-blue">Interpretable-by-design</span>
+          <span class="tag tag-purple">No black-box</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>XAI: Comparació de Tècniques</h3>
+        <div class="tbl-wrap">
+          <table>
+            <thead><tr><th>Tècnica</th><th>Tipus</th><th>Avantatge</th><th>Limitació</th></tr></thead>
+            <tbody>
+              <tr><td><strong>EBM</strong></td><td><span class="tag tag-green">Natiu</span></td><td>Descomposició exacta</td><td>Capacitat moderada</td></tr>
+              <tr><td>SHAP</td><td><span class="tag tag-warn">Post-hoc</span></td><td>Aplicable a qualsevol model</td><td>Inconsistències amb variables correlacionades</td></tr>
+              <tr><td>LIME</td><td><span class="tag tag-warn">Post-hoc</span></td><td>Explicacions locals</td><td>Pot divergir de SHAP</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="highlight danger" style="margin-top:8px">
+          <strong>Problema post-hoc en GxP:</strong> SHAP i LIME poden generar explicacions divergents. En entorns auditats, l'EBM té una única descomposició exacta per construcció.
+        </div>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top:8px">
+      <h3>Marc Regulatori: GxP / GAMP5 / ALCOA+</h3>
+      <div class="grid-3">
+        <div>
+          <h4>GAMP 5 [ref 10]</h4>
+          <p class="text-muted">Ús previst, control de canvis, traçabilitat de dades/models, monitoratge continu del rendiment per garantir defensabilitat en auditoria.</p>
+        </div>
+        <div>
+          <h4>ALCOA+ [ref 21]</h4>
+          <p class="text-muted">Atribuïble, Llegible, Contemporani, Original, Acurat + Complet, Consistent, Durador, Disponible.</p>
+        </div>
+        <div>
+          <h4>Risc de Drift [ref 13]</h4>
+          <p class="text-muted">Necessitat de governança del cicle de vida del model. Monitoratge amb PSI (Population Stability Index).</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════
+       SECCIÓ 3: DADES
+  ════════════════════════════════════════════ -->
+  <section class="section" id="sec-dades">
+    <div class="section-title">Secció 3</div>
+    <h2 class="section-heading">Dades</h2>
+
+    <div class="grid-2">
+      <div class="card card-accent">
+        <h3>Descripció del Dataset</h3>
+        <div class="pill-stats">
+          <div class="pill">Total lots: <span>4.600</span></div>
+          <div class="pill">Anys: <span>9 anys</span></div>
+          <div class="pill">Variables originals: <span>150</span></div>
+          <div class="pill">Numèriques: <span>104</span></div>
+          <div class="pill">Categòriques: <span>46</span></div>
+        </div>
+        <div class="highlight warn" style="margin-top:12px">
+          <strong>⚠️ Canvi de procés el 2024:</strong> A partir del 2024 s'observa un canvi de procés que coincideix amb una millora del yield. Per no-estacionarietat, l'entrenament es focalitza en dades des de 2024.
+        </div>
+        <hr class="divider">
+        <h4>Dataset final (post-filtratge)</h4>
+        <div class="pill-stats">
+          <div class="pill">Mostres: <span>956</span></div>
+          <div class="pill">Variables: <span>56</span></div>
+          <div class="pill">Partició test: <span>25% (242 mostres)</span></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>Blocs Funcionals de Variables</h3>
+        <div class="tbl-wrap">
+          <table>
+            <thead><tr><th>Bloc</th><th>Tipus de variables</th></tr></thead>
+            <tbody>
+              <tr><td>Procés</td><td>Temperatura, pressió, temps</td></tr>
+              <tr><td>Qualitat</td><td>Potència, impureses</td></tr>
+              <tr><td>Context operatiu</td><td>Torn, operador, equip</td></tr>
+              <tr><td>Manteniment</td><td>Registres d'equipament</td></tr>
+              <tr><td>Temporals</td><td>Marques de temps</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <h4 style="margin-top:12px">Criteris d'Eliminació de Variables</h4>
+        <ul style="margin-left:18px;font-size:13px;line-height:2;color:var(--text-muted)">
+          <li>Valors absents amb causa operacional sense solució</li>
+          <li>Correlacions fortes (redundàncies / multicolinealitat)</li>
+          <li>Variància baixa amb aportació limitada</li>
+          <li>Variables temporals amb baixa utilitat causal directa</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="grid-2" style="margin-top:8px">
+      <div class="card card-success">
+        <h3>Feature Engineering Aplicat</h3>
+        <p>Substitució de <strong>marques temporals puntuals</strong> per <strong>durades agregades</strong> més robustes.</p>
+        <div class="highlight success">
+          <strong>Exemple:</strong> Temps total de fase (agregat) en lloc de timestamps individuals → redueix soroll i concentra el model en factors rellevants del comportament de procés.
+        </div>
+        <hr class="divider">
+        <h4>Mapa de Variables</h4>
+        <p class="text-muted">Cada variable documentada amb: descripció funcional, fase del procés, naturalesa accionable i correlacions. Separa variables <em>operatives</em>, <em>informatives</em> i <em>descriptives</em>.</p>
+      </div>
+
+      <div class="card">
+        <h3>Partició i Govern de Dades</h3>
+        <p><strong>Partició cronològica</strong> (no aleatòria) dins el període 2024+ per evitar fuites d'informació temporals.</p>
+        <div class="highlight">
+          <strong>Traçabilitat end-to-end:</strong>
+          <ul style="margin:6px 0 0 18px;font-size:13px;line-height:1.9">
+            <li>Versionat de datasets</li>
+            <li>Diccionari de dades</li>
+            <li>Registre de transformacions</li>
+          </ul>
+        </div>
+        <hr class="divider">
+        <div class="highlight warn">
+          <strong>Nota:</strong> 960 lots bruts → 956 mostres finals (4 eliminades durant neteja). Cal tenir clares ambdues xifres per respondre preguntes.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════
+       SECCIÓ 4: METODOLOGIA
+  ════════════════════════════════════════════ -->
+  <section class="section" id="sec-metodologia">
+    <div class="section-title">Secció 4</div>
+    <h2 class="section-heading">Metodologia</h2>
+
+    <div class="card card-accent">
+      <h3>Estratègia Filter-then-Interact: 3 Fases EBM</h3>
+      <div class="phase-flow">
+        <div class="phase-step">
+          <div class="num">Fase 1</div>
+          <div class="name">Efectes Principals</div>
+          <div class="score">interactions=0 · leaf=2</div>
+          <div class="score" style="color:var(--warn);margin-top:4px">MAE 1.072 · R² 0.368</div>
+        </div>
+        <div class="phase-step">
+          <div class="num">Fase 2</div>
+          <div class="name">Filtrat Top-15</div>
+          <div class="score">top_n=15 variables</div>
+          <div class="score" style="color:var(--warn);margin-top:4px">Selecció per importància</div>
+        </div>
+        <div class="phase-step">
+          <div class="num">Fase 3</div>
+          <div class="name">Interaccions</div>
+          <div class="score">interactions=10 · leaf=10</div>
+          <div class="score" style="color:var(--success);margin-top:4px">MAE 1.018 · R² 0.470</div>
+        </div>
+        <div class="phase-step">
+          <div class="num">Fase 4</div>
+          <div class="name">Robustesa Final</div>
+          <div class="score">7 configuracions testades</div>
+          <div class="score" style="color:var(--accent3);margin-top:4px">MAE 0.950 · R² 0.422</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid-2" style="margin-top:16px">
+      <div class="card">
+        <h3>Hiperparàmetres Fase 1</h3>
+        <div class="tbl-wrap">
+          <table>
+            <thead><tr><th>Paràmetre</th><th>Valor</th></tr></thead>
+            <tbody>
+              <tr><td><code style="color:var(--accent3);font-family:var(--mono)">interactions</code></td><td>0</td></tr>
+              <tr><td><code style="color:var(--accent3);font-family:var(--mono)">learning_rate</code></td><td>0.05</td></tr>
+              <tr><td><code style="color:var(--accent3);font-family:var(--mono)">max_bins</code></td><td>256</td></tr>
+              <tr><td><code style="color:var(--accent3);font-family:var(--mono)">max_rounds</code></td><td>5000</td></tr>
+              <tr><td><code style="color:var(--accent3);font-family:var(--mono)">min_samples_leaf</code></td><td>2</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>Hiperparàmetres Fase 3</h3>
+        <div class="tbl-wrap">
+          <table>
+            <thead><tr><th>Paràmetre</th><th>Valor</th></tr></thead>
+            <tbody>
+              <tr><td><code style="color:var(--accent3);font-family:var(--mono)">interactions</code></td><td>10 (detecció automàtica)</td></tr>
+              <tr><td><code style="color:var(--accent3);font-family:var(--mono)">learning_rate</code></td><td>0.05</td></tr>
+              <tr><td><code style="color:var(--accent3);font-family:var(--mono)">max_bins</code></td><td>256</td></tr>
+              <tr><td><code style="color:var(--accent3);font-family:var(--mono)">max_rounds</code></td><td>5000</td></tr>
+              <tr><td><code style="color:var(--accent3);font-family:var(--mono)">min_samples_leaf</code></td><td>10</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="highlight warn" style="margin-top:8px;font-size:12px">
+          ⚠️ Nota: el títol diu <code>interactions=25</code> però el llistat diu <code>interactions=10</code>. El model final usa 10 interaccions detectades automàticament.
+        </div>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top:8px">
+      <h3>Raó de la Reducció 56→15 Variables</h3>
+      <div class="grid-2">
+        <div>
+          <p><strong>Problema amb 56 variables:</strong></p>
+          <div class="formula">C(56,2) = 1.540 parells possibles d'interacció</div>
+          <p class="text-muted">Excedeix la capacitat d'estimació fiable amb 956 mostres.</p>
+        </div>
+        <div>
+          <p><strong>Solució amb 15 variables:</strong></p>
+          <div class="formula">C(15,2) = 105 parells possibles d'interacció</div>
+          <p class="text-muted">Garanteix densitat de dades suficient per estimar cada interacció de manera fiable.</p>
+        </div>
+      </div>
+      <div class="highlight success">
+        <strong>Resultat clau (Fase 2 vs Fase 1):</strong> R² 0.477 vs 0.395 (p=0.037, test Wilcoxon). El filtratge no perd informació sinó que <em>elimina soroll</em> que degrada la generalització.
+      </div>
+    </div>
+
+    <div class="card card-warn" style="margin-top:8px">
+      <h3>Per Què NO Usar LASSO com a Filtre per a EBM?</h3>
+      <p>El model <strong>LASSO+EBM</strong> obté el pitjor resultat (R²=0.202). LASSO descarta variables amb efectes <em>no lineals</em> importants que l'EBM sí aprofita quan les selecciona pel seu propi criteri d'importància. La selecció lineal de variables és inadequada per a models no lineals.</p>
+    </div>
+
+    <div class="card" style="margin-top:8px">
+      <h3>Configuració Experimental</h3>
+      <div class="badge-row">
+        <span class="badge" style="border-color:var(--accent3);color:var(--accent3)">Python 3.9</span>
+        <span class="badge" style="border-color:var(--accent);color:var(--accent)">InterpretML 0.4.3</span>
+        <span class="badge" style="border-color:var(--accent2);color:var(--accent2)">scikit-learn 1.2.0</span>
+        <span class="badge" style="border-color:var(--warn);color:var(--warn)">seed=42</span>
+        <span class="badge" style="border-color:var(--success);color:var(--success)">5-fold CV</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════
+       SECCIÓ 5: RESULTATS
+  ════════════════════════════════════════════ -->
+  <section class="section" id="sec-resultats">
+    <div class="section-title">Secció 5</div>
+    <h2 class="section-heading">Resultats</h2>
+
+    <div class="card card-accent">
+      <h3>Taula 1 — Evolució Progressiva del Rendiment (5-fold CV)</h3>
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th>Fase / Model</th><th>MAE</th><th>RMSE</th><th>R²</th><th>Nota</th></tr></thead>
+          <tbody>
+            <tr><td>Lasso (Baseline)</td><td>1.126</td><td>1.646</td><td>0.332</td><td><span class="tag tag-warn">Referència lineal</span></td></tr>
+            <tr><td>EBM Fase 1</td><td>1.072</td><td>1.602</td><td>0.368</td><td><span class="tag tag-blue">Sense interaccions</span></td></tr>
+            <tr><td>EBM Fase 3</td><td>1.018</td><td>1.466</td><td>0.470</td><td><span class="tag tag-purple">Màxim R²</span></td></tr>
+            <tr class="best"><td>EBM Fase 4 (Robust)</td><td>0.950</td><td>1.368</td><td>0.422</td><td><span class="tag tag-green">Millor equilibri</span></td></tr>
+            <tr><td><em>Millora total (%)</em></td><td><em>−15.6%</em></td><td><em>−16.9%</em></td><td><em>+27.1%</em></td><td></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="highlight warn" style="margin-top:8px;font-size:13px">
+        <strong>Per què Fase 4 (R²=0.422) és millor que Fase 3 (R²=0.470)?</strong> Fase 3 té R² superior però menys estabilitat entre folds. En entorns industrials la <em>fiabilitat</em> és tan important com la precisió puntual. Robust (Leaf=10) prioritza robustesa.
+      </div>
+    </div>
+
+    <div class="card" style="margin-top:12px">
+      <h3>Taula 2 — 7 Configuracions EBM Fase 4 (5-fold CV)</h3>
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th>Configuració</th><th>MAE ± std</th><th>RMSE ± std</th><th>R² ± std</th></tr></thead>
+          <tbody>
+            <tr class="best"><td>Robust (Leaf=10) ★</td><td>0.950 ± 0.063</td><td>1.368 ± 0.153</td><td>0.422 ± 0.109</td></tr>
+            <tr><td>High Interactions (25)</td><td>0.953 ± 0.057</td><td>1.370 ± 0.136</td><td>0.421 ± 0.094</td></tr>
+            <tr><td>Current Best</td><td>0.953 ± 0.060</td><td>1.371 ± 0.154</td><td>0.420 ± 0.107</td></tr>
+            <tr><td>High Precision (512 bins)</td><td>0.954 ± 0.059</td><td>1.371 ± 0.149</td><td>0.420 ± 0.103</td></tr>
+            <tr><td>Slow/Deep Learning</td><td>0.954 ± 0.068</td><td>1.381 ± 0.155</td><td>0.412 ± 0.105</td></tr>
+            <tr><td>Smooth Sensors (128 bins)</td><td>0.956 ± 0.059</td><td>1.378 ± 0.149</td><td>0.415 ± 0.101</td></tr>
+            <tr><td>Simple/Stable</td><td>0.963 ± 0.069</td><td>1.411 ± 0.162</td><td>0.387 ± 0.108</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="text-muted" style="margin-top:8px;font-size:13px">Les configuracions amb <strong>més regularització</strong> superen les més complexes → amb 956 mostres, la simplificació és més beneficiosa que incrementar capacitat representacional.</p>
+    </div>
+
+    <div class="card card-success" style="margin-top:12px">
+      <h3>Taula 3 — Benchmark 5 Models (Test Set Fix, 242 mostres)</h3>
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th>Model</th><th>MAE</th><th>R²</th><th>Termes</th><th>Train (s)</th><th>Tipus</th></tr></thead>
+          <tbody>
+            <tr class="best"><td>EBM filter+interact ★</td><td>0.994</td><td>0.477</td><td>25</td><td>4.9</td><td><span class="tag tag-green">Glass-box</span></td></tr>
+            <tr><td>EBM full (no filter)</td><td>1.026</td><td>0.395</td><td>66</td><td>11.6</td><td><span class="tag tag-blue">Glass-box</span></td></tr>
+            <tr><td>LASSO (full)</td><td>1.038</td><td>0.383</td><td>36</td><td>0.1</td><td><span class="tag tag-warn">Lineal</span></td></tr>
+            <tr><td>XGBoost tuned</td><td>1.037</td><td>0.369</td><td>2500</td><td>78.2</td><td><span class="tag tag-red">Black-box</span></td></tr>
+            <tr><td>LASSO + EBM</td><td>1.177</td><td>0.202</td><td>18</td><td>4.3</td><td><span class="tag tag-red">Pitjor</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="highlight success" style="margin-top:8px">
+        <strong>Resultat clau:</strong> EBM filter+interact supera XGBoost en R² per un <strong>29% relatiu</strong> (0.477 vs 0.369) amb <strong>100× menys paràmetres</strong> (25 vs 2500). La interpretabilitat NO penalitza el rendiment.
+      </div>
+
+      <!-- Visual comparison bars -->
+      <div style="margin-top:16px">
+        <h4 style="margin-bottom:12px;font-size:13px;color:var(--text-muted)">Comparació R² (test set)</h4>
+        <div class="bar-row"><div class="bar-label">EBM filter+interact</div><div class="bar-track"><div class="bar-fill" style="width:95.4%;background:linear-gradient(90deg,var(--success),var(--accent3))"></div></div><div class="bar-val">0.477</div></div>
+        <div class="bar-row"><div class="bar-label">EBM full (no filter)</div><div class="bar-track"><div class="bar-fill" style="width:79%;background:var(--accent)"></div></div><div class="bar-val">0.395</div></div>
+        <div class="bar-row"><div class="bar-label">LASSO (full)</div><div class="bar-track"><div class="bar-fill" style="width:76.6%;background:var(--warn)"></div></div><div class="bar-val">0.383</div></div>
+        <div class="bar-row"><div class="bar-label">XGBoost tuned</div><div class="bar-track"><div class="bar-fill" style="width:73.8%;background:var(--danger)"></div></div><div class="bar-val">0.369</div></div>
+        <div class="bar-row"><div class="bar-label">LASSO + EBM</div><div class="bar-track"><div class="bar-fill" style="width:40.4%;background:var(--text-dim)"></div></div><div class="bar-val">0.202</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════
+       SECCIÓ 6: INTERPRETABILITAT
+  ════════════════════════════════════════════ -->
+  <section class="section" id="sec-interpretabilitat">
+    <div class="section-title">Secció 6</div>
+    <h2 class="section-heading">Explicabilitat i Utilitat per a RCA</h2>
+
+    <div class="grid-2">
+      <div class="card card-purple">
+        <h3>4 Tècniques d'Explicabilitat de l'EBM</h3>
+        <div class="layer-stack">
+          <div class="layer" style="background:rgba(124,92,191,.05)">
+            <div class="layer-num" style="color:var(--accent2);font-size:18px">①</div>
+            <div><div class="layer-name">Importància Global</div><div class="layer-desc">Contribució relativa de cada variable i interacció al rendiment general</div></div>
+          </div>
+          <div class="layer" style="background:rgba(124,92,191,.05)">
+            <div class="layer-num" style="color:var(--accent2);font-size:18px">②</div>
+            <div><div class="layer-name">Shape Functions</div><div class="layer-desc">Visualitza com cada característica afecta la predicció al llarg del seu rang (relacions no lineals)</div></div>
+          </div>
+          <div class="layer" style="background:rgba(124,92,191,.05)">
+            <div class="layer-num" style="color:var(--accent2);font-size:18px">③</div>
+            <div><div class="layer-name">Contribucions Locals</div><div class="layer-desc">Descomposició de prediccions individuals per lot concret</div></div>
+          </div>
+          <div class="layer" style="background:rgba(124,92,191,.05)">
+            <div class="layer-num" style="color:var(--accent2);font-size:18px">④</div>
+            <div><div class="layer-name">Anàlisi d'Interaccions</div><div class="layer-desc">Relacions sinèrgiques entre parells de variables (efectes combinats)</div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card card-accent">
+        <h3>Cas Exemple: Shape Function C33</h3>
+        <p><strong>C33</strong> = temps total de mescla de Fracció I</p>
+        <div class="tbl-wrap" style="margin:12px 0">
+          <table>
+            <thead><tr><th>Zona</th><th>Rang (min)</th><th>Contribució</th><th>Acció</th></tr></thead>
+            <tbody>
+              <tr class="best"><td>Òptim</td><td>≈ 3.04 min</td><td>+0.276 pp</td><td>✅ Mantenir</td></tr>
+              <tr><td>Segur</td><td>1.2 – 9.3 min</td><td>Positiu/neutre</td><td>✅ Acceptable</td></tr>
+              <tr><td>Penalització</td><td>> 10 min</td><td>Decreixent</td><td>⚠️ Evitar</td></tr>
+              <tr><td>Crític</td><td>> 35 min</td><td>−0.6 pp</td><td>❌ No permès</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="highlight" style="font-size:13px">
+          <strong>Impacte econòmic:</strong> Cada minut addicional per sobre de 10 min ≈ 0.03 pp de yield, equivalent a <strong>milers de dòlars per lot</strong> (preu referència: 55 $/g).
+        </div>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top:8px">
+      <h3>EBM vs SHAP/LIME: 3 Avantatges Clau</h3>
+      <div class="grid-3">
+        <div>
+          <h4 style="color:var(--success)">1. Consistència exacta</h4>
+          <p class="text-muted" style="font-size:13px">L'EBM té una única descomposició exacta per construcció. SHAP i LIME poden generar explicacions divergents per a la mateixa predicció (especialment amb variables correlacionades).</p>
+        </div>
+        <div>
+          <h4 style="color:var(--success)">2. Forma funcional completa</h4>
+          <p class="text-muted" style="font-size:13px">SHAP indica la magnitud/direcció d'una observació concreta. La shape function de l'EBM respon: quin és el rang òptim? Quina penalització per cada valor? Informació accionable directa.</p>
+        </div>
+        <div>
+          <h4 style="color:var(--success)">3. Auditabilitat GxP</h4>
+          <p class="text-muted" style="font-size:13px">Calcular SHAP per XGBoost (2500 arbres) requereix computació i genera explicacions aproximades. En GxP, cada explicació ha de ser reproduïble i auditable. L'EBM evita capes d'aproximació.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="card card-warn" style="margin-top:8px">
+      <h3>Impacte Econòmic: Escenaris d'Optimització</h3>
+      <div class="grid-2">
+        <div>
+          <h4>Escenari A — Optimització Total del Portfoli</h4>
+          <div class="pill-stats">
+            <div class="pill">Millora yield: <span>46.31% → 47.32%</span></div>
+            <div class="pill">Guany absolut: <span>+1.01 pp</span></div>
+            <div class="pill">Per lot: <span>+268.000 $</span></div>
+            <div class="pill">Total portfoli: <span>259 M$</span></div>
+            <div class="pill">Anual (100 lots): <span>26.8 M$</span></div>
+          </div>
+          <p class="text-muted" style="font-size:12px;margin-top:8px">Escenari aspiracional: optimització simultània de totes les variables.</p>
+        </div>
+        <div>
+          <h4>Escenari B — Optimització Focalitzada (3 variables)</h4>
+          <p style="font-size:13px;margin-bottom:8px">Variables: <strong>D36</strong> (filtració, 62.1% lots), <strong>D24</strong> (mescla, 50.4% lots), <strong>D40</strong> (filtració, 43.0% lots)</p>
+          <div class="pill-stats">
+            <div class="pill">Guany: <span>+0.19 pp</span></div>
+            <div class="pill">% del potencial: <span>~19%</span></div>
+            <div class="pill">Ingressos anuals: <span>~5 M$</span></div>
+          </div>
+          <div class="highlight success" style="margin-top:8px;font-size:13px">Intervenció mínima, retorn immediat i justificable per auditoria.</div>
+        </div>
+      </div>
+      <hr class="divider">
+      <h4>Fórmula de Potencial Optimitzat</h4>
+      <div class="formula">Y_opt = Y_pred + (−Score_neg · rec · R²)</div>
+      <p class="text-muted" style="font-size:13px;margin-top:8px">On: <strong>Score_neg</strong> = suma de contribucions negatives (impacte &lt; −0.1 pp) · <strong>rec</strong> = 0.70 (factor de recuperació operativa, 30% penalització) · <strong>R²</strong> = 0.422 (confiança estadística). Factor de conservadorisme global: <strong>29.4%</strong>.</p>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════
+       SECCIÓ 7: INDUSTRIALITZACIÓ
+  ════════════════════════════════════════════ -->
+  <section class="section" id="sec-industrialitzacio">
+    <div class="section-title">Secció 7</div>
+    <h2 class="section-heading">Industrialització i Monitoratge</h2>
+
+    <div class="card card-success">
+      <h3>Taula 4 — Viabilitat Computacional</h3>
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th>Mètrica</th><th>EBM filter</th><th>EBM no-filter</th><th>XGBoost</th></tr></thead>
+          <tbody>
+            <tr class="best"><td>Temps entrenament (s)</td><td>4.8</td><td>11.4</td><td>78.2</td></tr>
+            <tr class="best"><td>Latència inferència (ms/mostra)</td><td>0.0015</td><td>0.0040</td><td>0.0102</td></tr>
+            <tr class="best"><td>Throughput (pred/s)</td><td>688.000</td><td>248.000</td><td>99.000</td></tr>
+            <tr><td>Empremta model (MB)</td><td>2.7</td><td>4.1</td><td>0.5</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="grid-3" style="margin-top:16px">
+        <div class="highlight success">
+          <strong>Inferència temps real:</strong> 0.0015 ms/mostra = 688.000 pred/seg. 1.000 lots anuals processables en &lt;2 ms. Compatible amb MES/SCADA.
+        </div>
+        <div class="highlight success">
+          <strong>Reentrenament ràpid:</strong> 4.8s per cicle complet. Habilita estratègia <em>online learning</em> per lot sense infraestructura dedicada.
+        </div>
+        <div class="highlight success">
+          <strong>Edge deployment:</strong> 2.7 MB → contenidors lleugers sense GPU. Compatible amb arquitectures edge en planta.
+        </div>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top:12px">
+      <h3>Monitoratge de Drift — PSI (Population Stability Index)</h3>
+      <div class="grid-2">
+        <div>
+          <h4>Configuració del Sistema</h4>
+          <ul style="margin-left:18px;font-size:14px;line-height:2">
+            <li>Finestres lliscants de <strong>50 lots</strong></li>
+            <li>Pas de <strong>25 lots</strong></li>
+            <li>5 variables de major importància del model</li>
+            <li>Llindar d'alerta: <strong>PSI > 0.25</strong></li>
+            <li>Reentrenament: PSI > 0.25 durant <strong>3 finestres consecutives</strong></li>
+          </ul>
+          <div class="tbl-wrap" style="margin-top:12px">
+            <table>
+              <thead><tr><th>PSI</th><th>Interpretació</th></tr></thead>
+              <tbody>
+                <tr><td>&lt; 0.1</td><td><span class="tag tag-green">Canvi insignificant</span></td></tr>
+                <tr><td>0.1 – 0.25</td><td><span class="tag tag-warn">Canvi moderat</span></td></tr>
+                <tr><td>&gt; 0.25</td><td><span class="tag tag-red">Canvi significatiu</span></td></tr>
+                <tr><td>&gt; 5</td><td><span class="tag tag-red">⚠️ CRÍTIC (D36: PSI=6.8)</span></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div>
+          <h4>Resultats Retrospectius (juny 2025 →)</h4>
+          <div class="highlight danger">
+            <strong>D36 (papers gruixuts):</strong> PSI = 6.8 → Canvi radical de distribució. Probablement canvi de material o protocol de filtració. Les shape functions apreses per D36 operen fora del rang d'entrenament.
+          </div>
+          <div class="highlight success" style="margin-top:8px">
+            <strong>Robustesa malgrat el drift:</strong> MAE es manté per sota UCL = 2.55 en totes les finestres. L'estructura additiva de l'EBM proporciona degradació gradual: quan una variable deriva, les altres 14 variables i 10 interaccions mantenen capacitat predictiva.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card card-purple" style="margin-top:8px">
+      <h3>Arquitectura d'Industrialització</h3>
+      <div class="grid-2">
+        <div>
+          <h4>Aspectes Tècnics</h4>
+          <ul style="margin-left:18px;font-size:14px;line-height:2">
+            <li>Serialització i versionat (<code style="color:var(--accent3);font-family:var(--mono)">pickle/joblib</code> + metadades)</li>
+            <li>Pipeline de preprocessament documentat</li>
+            <li>Sistema PSI per detectar data/model drift</li>
+            <li>Integració amb sistemes MES via <strong>API REST</strong></li>
+            <li>Documentació tècnica i operativa completa</li>
+          </ul>
+        </div>
+        <div>
+          <h4>Treball Futur Necessari</h4>
+          <ul style="margin-left:18px;font-size:14px;line-height:2;color:var(--text-muted)">
+            <li>Validació formal GxP: <strong>IQ/OQ/PQ</strong></li>
+            <li>Monitoratge i governança de drift</li>
+            <li>Protocols de recalibratge amb aprovació QA</li>
+            <li>Integració amb fluxos CAPA i sistemes MES/LIMS</li>
+            <li>Ampliació temporal del dataset</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="card card-warn" style="margin-top:8px">
+      <h3>Limitacions del Model</h3>
+      <div class="grid-2">
+        <ol style="margin-left:18px;font-size:14px;line-height:2.2">
+          <li>Dataset efectiu acotat a <strong>956 mostres</strong></li>
+          <li>Dependència de la qualitat del registre de dades</li>
+          <li>Risc de drift amb canvis operatius [ref 13]</li>
+        </ol>
+        <ol start="4" style="margin-left:18px;font-size:14px;line-height:2.2">
+          <li>Lectura causal limitada per naturalesa <strong>observacional</strong> (les contribucions són associatives, no causals)</li>
+          <li>Bretxa d'implementació per integració GMP/QMS</li>
+        </ol>
+      </div>
+      <div class="highlight danger" style="margin-top:8px">
+        <strong>Important:</strong> El model és un <em>decision support system</em>, NO un substitut de la revisió experta. Estratègia <strong>human-in-the-loop</strong>: el model prioritza l'evidència, l'equip expert valida i decideix.
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════
+       SECCIÓ 8: PREGUNTES I RESPOSTES
+  ════════════════════════════════════════════ -->
+  <section class="section" id="sec-qa">
+    <div class="section-title">Secció 8</div>
+    <h2 class="section-heading">Preguntes Freqüents de Defensa</h2>
+
+    <div class="qa-cat">🔬 Metodologia i Model</div>
+
+    <div class="qa-item">
+      <div class="qa-q">Per què EBM i no XGBoost, que és més potent?<span class="chevron">▼</span></div>
+      <div class="qa-a">En entorns GxP <strong>cada predicció ha de ser justificable davant auditoria</strong>. L'EBM té una única descomposició exacta per construcció (f(x) = β₀ + Σfᵢ(xᵢ) + Σfᵢⱼ), mentre que XGBoost requereix tècniques post-hoc (SHAP) que afegeixen una capa d'aproximació i incertesa. A més, empíricament l'EBM filter+interact <strong>supera XGBoost en R² per un 29% relatiu</strong> (0.477 vs 0.369) amb 100× menys paràmetres (25 vs 2500).</div>
+    </div>
+
+    <div class="qa-item">
+      <div class="qa-q">Per què la Fase 4 (R²=0.422) es considera la millor si la Fase 3 té R²=0.470?<span class="chevron">▼</span></div>
+      <div class="qa-a">En entorns industrials la <strong>robustesa i estabilitat</strong> entre folds és tan important com la precisió puntual. La Fase 3 obté un R² superior però amb <strong>menys estabilitat entre folds</strong>. La configuració Robust (Leaf=10) de Fase 4 té desviacions estàndard contingudes (R² = 0.422 ± 0.109), la qual cosa garanteix que el model funciona de manera consistent en producció i no només en condicions específiques del conjunt de test.</div>
+    </div>
+
+    <div class="qa-item">
+      <div class="qa-q">Per què es redueixen de 56 a 15 variables i no menys o més?<span class="chevron">▼</span></div>
+      <div class="qa-a">El criteri és estadístic: amb 56 variables hi hauria <strong>C(56,2) = 1.540 parells possibles</strong> d'interacció, cosa que excedeix la capacitat d'estimació fiable amb 956 mostres. Reduint a 15 variables s'obté <strong>C(15,2) = 105 parells</strong>, garantint densitat de dades suficient per interacció. El tall en 15 es va identificar on la importància experimenta una <em>caiguda significativa</em> (elbow point) al gràfic d'importàncies de Fase 1.</div>
+    </div>
+
+    <div class="qa-item">
+      <div class="qa-q">Per què LASSO+EBM és el pitjor model?<span class="chevron">▼</span></div>
+      <div class="qa-a">LASSO és un model <strong>lineal</strong> que descarta variables en funció d'efectes lineals. Quan s'usa com a filtre per a l'EBM (model no lineal), elimina variables amb <strong>efectes no lineals importants</strong> que l'EBM sí aprofitaria si les seleccionés pel seu propi criteri. El resultat (R²=0.202) demostra que la selecció lineal de variables és inadequada per a models no lineals. La lliçó: el mètode de filtratge ha d'estar alineat amb la naturalesa del model final.</div>
+    </div>
+
+    <div class="qa-item">
+      <div class="qa-q">Quina és la diferència entre la Taula 1/2 i la Taula 3 en termes d'avaluació?<span class="chevron">▼</span></div>
+      <div class="qa-a"><ul><li><strong>Taula 1 i 2:</strong> Validació creuada 5-fold sobre les 956 mostres. Reporta MAE, RMSE i R² com a mitja ± desviació estàndard dels 5 folds.</li><li><strong>Taula 3:</strong> Test set fix de 242 mostres (25% del dataset). Permet comparabilitat directa entre models amb arquitectures heterogènies. Els valors de R² no són directament comparables entre les dues metodologies.</li></ul> Per això l'EBM Fase 3 té R²=0.470 (5-fold) però l'EBM filter+interact té R²=0.477 (test set), tot i ser conceptualment el mateix model.</div>
+    </div>
+
+    <div class="qa-cat">📊 Dades i Preprocessament</div>
+
+    <div class="qa-item">
+      <div class="qa-q">Per què s'entrena només amb dades des de 2024 si se'n disposen de 9 anys?<span class="chevron">▼</span></div>
+      <div class="qa-a">El procés és <strong>no estacionari</strong>: a partir de 2024 s'observa un canvi de procés que coincideix amb una millora del yield. Entrenar amb dades anteriors introduiria distribucions que ja no representen l'operació actual, degradant la qualitat de les prediccions i les explicacions. Per <strong>garantir homogeneïtat operacional</strong>, s'usa el subconjunt post-canvi (960 lots → 956 mostres finals).</div>
+    </div>
+
+    <div class="qa-item">
+      <div class="qa-q">Per quin motiu la partició és cronològica i no aleatòria?<span class="chevron">▼</span></div>
+      <div class="qa-a">Per <strong>evitar fuites d'informació temporal</strong>. Si la partició fos aleatòria, el model podria aprendre de lots "futurs" durant l'entrenament, obtenint mètriques optimistes que no reflectirien el rendiment real en producció. En dades de sèries temporals, la partició cronològica reflecteix fidelment el desafiament real: predir lots futurs a partir d'informació passada.</div>
+    </div>
+
+    <div class="qa-item">
+      <div class="qa-q">Quines variables van resultar més importants?<span class="chevron">▼</span></div>
+      <div class="qa-a">Les variables de major importància identificades inclouen: <ul style="margin:8px 0 0 18px;line-height:2"><li><strong>D36:</strong> Nombre total de papers gruixuts (filtració) — també la variable amb major drift (PSI=6.8)</li><li><strong>D24:</strong> Paràmetre associat a mescla</li><li><strong>D40:</strong> Paràmetre de filtració</li><li><strong>C33:</strong> Temps total de mescla de Fracció I (exemple paradigmàtic de shape function)</li><li><strong>D23, C29:</strong> Pes de fraccions (identificades també pel Lasso)</li></ul> Els factors més crítics cobreixen: condicions de tanc, temps de mescla, configuracions de filtració i estructura operativa del lot.</div>
+    </div>
+
+    <div class="qa-cat">🏭 Industrialització i GxP</div>
+
+    <div class="qa-item">
+      <div class="qa-q">Com es garanteix la traçabilitat del model per a auditories GxP?<span class="chevron">▼</span></div>
+      <div class="qa-a">La metodologia proposa: <ul style="margin:8px 0 0 18px;line-height:2"><li><strong>Versionat del model</strong> amb pickle/joblib + metadades</li><li><strong>Pipeline de preprocessament documentat</strong> i reproduïble</li><li><strong>Diccionari de dades</strong> i registre de totes les transformacions</li><li><strong>Descomposició exacta</strong> de cada predicció (EBM per construcció)</li><li><strong>Monitoratge PSI</strong> per detectar canvis en distribució</li><li>Protocols d'IQ/OQ/PQ (treball futur) per integració corporativa</li></ul></div>
+    </div>
+
+    <div class="qa-item">
+      <div class="qa-q">Quin és el risc principal de drift i com se gestiona?<span class="chevron">▼</span></div>
+      <div class="qa-a">El risc principal és que les distribucions de variables d'entrada canviïn respecte a les condicions d'entrenament, fent que les shape functions apreses operin fora del rang vàlid. <strong>Exemple real:</strong> D36 assoleix PSI=6.8 (crític) des de juny 2025, probablement per canvi de material de filtració. La gestió proposta: <ul style="margin:8px 0 0 18px;line-height:2"><li>Monitoratge PSI amb finestres lliscants de 50 lots (pas 25)</li><li>Activar reentrenament quan PSI > 0.25 durant 3 finestres consecutives</li><li>Temps de reentrenament: 4.8s (viable sense aturar producció)</li></ul> La robustesa malgrat el drift (MAE &lt; UCL=2.55) s'explica per l'estructura additiva: quan una variable deriva, les 14 restants mantenen capacitat predictiva.</div>
+    </div>
+
+    <div class="qa-item">
+      <div class="qa-q">El model pot substituir l'expert de procés en la investigació RCA?<span class="chevron">▼</span></div>
+      <div class="qa-a"><strong>No, i aquest és un punt crític del treball.</strong> El model és un <em>decision support system</em>, no un substitut de la revisió experta. La proposta és una estratègia <strong>human-in-the-loop</strong>: el model estructura i prioritza l'evidència quantitativa, reduint l'espai d'hipòtesis; l'equip expert valida, contrasta amb coneixement tàcit i decideix les accions finals. L'RCA tradicional manté fortaleses en profunditat causal contextual que el model no captura. A més, les contribucions del model s'interpreten com a <em>senyals direccionals associatius</em>, no com a efectes causals directes.</div>
+    </div>
+
+    <div class="qa-item">
+      <div class="qa-q">Com es justifica el factor de conservadorisme del 29.4% en l'anàlisi econòmica?<span class="chevron">▼</span></div>
+      <div class="qa-a">El 29.4% és un <strong>filtre en cascada</strong> que integra dues limitacions: <ol style="margin:8px 0 0 18px;line-height:2"><li><strong>Variància explicada (R²=0.422):</strong> Actua com a factor de confiança estadística. Només es pot intervenir sobre la fracció de variabilitat que el model explica formalment.</li><li><strong>Recuperabilitat operativa (rec=0.70):</strong> Penalització del 30% per les friccions reals de la planta (temps de resposta, precisió d'equips, inèrcies del procés). L'òptim teòric rarament és assolible al 100% en entorns GxP.</li></ol> El MAE=0.950 s'usa addicionalment com a referència per filtrar recomanacions i basar el cas de negoci en senyals robustos, no en fluctuacions aleatòries.</div>
+    </div>
+
+    <div class="qa-cat">📈 Mètriques i Interpretació</div>
+
+    <div class="qa-item">
+      <div class="qa-q">Per què usar MAE i RMSE? Quina diferència hi ha?<span class="chevron">▼</span></div>
+      <div class="qa-a"><ul><li><strong>MAE (Mean Absolute Error):</strong> Error mitjà en valor absolut. Pes igual a tots els errors. Més robust davant outliers. Interpretable directament en les unitats del yield (punts percentuals).</li><li><strong>RMSE (Root Mean Squared Error):</strong> Penalitza més els errors grans (quadràtics). Més sensible a desviacions extremes, rellevant en procés on un lot molt dolent té un impacte desproporcionat.</li><li><strong>R² (Coefficient of Determination):</strong> Proporció de variància explicada. Útil per comparar models però dependent de la variabilitat del conjunt de dades. Cal tenir en compte el protocol d'avaluació (CV vs test fix).</li></ul></div>
+    </div>
+
+    <div class="qa-item">
+      <div class="qa-q">Quins models es van comparar i per quin motiu es van triar exactament aquests?<span class="chevron">▼</span></div>
+      <div class="qa-a">Es van comparar 5 models per cobrir un espectre representatiu: <ul style="margin:8px 0 0 18px;line-height:2"><li><strong>LASSO:</strong> Referència lineal amb regularització L1, baseline del sector i punt de partida metodològic</li><li><strong>EBM filter+interact:</strong> Model proposat (glass-box, no lineal, interpretatble)</li><li><strong>EBM full (sense filtre):</strong> Per aïllar l'efecte específic de la fase de filtratge</li><li><strong>XGBoost tunat:</strong> Representant black-box d'alt rendiment predictiu (48 combinacions GridSearchCV)</li><li><strong>LASSO+EBM:</strong> Per provar si la selecció lineal és adequada com a etapa de filtratge per a models no lineals (resultat: no)</li></ul></div>
+    </div>
+
+    <div class="qa-cat">🔍 Preguntes de Detall Tècnic</div>
+
+    <div class="qa-item">
+      <div class="qa-q">Quina és la diferència entre GAM i EBM?<span class="chevron">▼</span></div>
+      <div class="qa-a"><strong>GAM</strong> (Generalized Additive Model, Hastie & Tibshirani 1990): model additiu f(x) = Σfᵢ(xᵢ) que captura efectes no lineals de cada variable de manera independent. <strong>EBM</strong> (Explainable Boosting Machine): extensió moderna dels GAMs que usa <em>boosting</em> per aprendre les shape functions de manera iterativa. Afegeix <strong>interaccions de parell</strong> (GA2M, Lou et al. 2013), capturant efectes sinèrgics entre variables. La clau: manté l'estructura additiva (interpretable) però amb capacitat de capturar complexitat competitiva amb Random Forest o Gradient Boosting.</div>
+    </div>
+
+    <div class="qa-item">
+      <div class="qa-q">Quin és el significat de min_samples_leaf=10 en la configuració Robust?<span class="chevron">▼</span></div>
+      <div class="qa-a"><code style="color:var(--accent3)">min_samples_leaf=10</code> és un paràmetre de <strong>regularització</strong>: cada fulla de l'arbre intern ha de tenir almenys 10 mostres. Valors més alts → model més suau, menys overfitting, però menys capacitat d'adaptar-se a patrons locals. Amb un dataset de 956 mostres, una fulla de mínim 10 mostres ofereix el millor equilibri entre ajustament i generalització. Per contrast, <code>min_samples_leaf=2</code> (Fase 1) permet arbres molt profunds que poden sobreajustar. Això explica per què Robust supera High Interactions (25) malgrat tenir menys interaccions: la regularització compensació la complexitat addicional.</div>
+    </div>
+
+    <div class="qa-item">
+      <div class="qa-q">Quines eines d'IA es van usar en el desenvolupament del treball?<span class="chevron">▼</span></div>
+      <div class="qa-a">El treball declara l'ús de tres eines d'IA generativa: <ul style="margin:8px 0 0 18px;line-height:2"><li><strong>Claude (Anthropic):</strong> Programació Python (depuració, pipelines, scripts de visualització i benchmarking), revisió i redacció (LaTeX, estil), anàlisi exploratòria (discussió de resultats, interpretació de shape functions)</li><li><strong>Perplexity AI:</strong> Recerca bibliogràfica, cerca de publicacions sobre EBM/GAMs/drift/GxP, verificació de cites</li><li><strong>Gemini (Google):</strong> Revisió de textos, generació de resums, contrast d'idees en fases inicials</li></ul> <strong>Important:</strong> L'autor va mantenir el criteri de decisió, la validació dels resultats i la responsabilitat sobre el contingut final.</div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════
+       SECCIÓ 9: REFERÈNCIES
+  ════════════════════════════════════════════ -->
+  <section class="section" id="sec-refs">
+    <div class="section-title">Secció 9</div>
+    <h2 class="section-heading">Referències (21 finals)</h2>
+
+    <div class="highlight" style="margin-bottom:16px;font-size:13px">
+      <strong>Nota:</strong> La versió final té 21 referències (eren 23). Es van eliminar els duplicats: <strong>[14] Lundberg arXiv</strong> (preprint de [14] NeurIPS) i <strong>[20] Ribeiro arXiv</strong> (preprint de [19] KDD). Es conserven les versions publicades.
+    </div>
+
+    <div class="ref-grid">
+      <div class="ref-item"><span class="ref-num">[1]</span><span class="ref-title">Anonymous. Recent advances in EBM.</span><div class="ref-author">arXiv:2512.00528, 2025</div></div>
+      <div class="ref-item"><span class="ref-num">[2]</span><span class="ref-title">Bolón-Canedo et al. Feature selection on synthetic data.</span><div class="ref-author">arXiv:1507.08492, 2015</div></div>
+      <div class="ref-item"><span class="ref-num">[3]</span><span class="ref-title">Burnouf. Modern plasma fractionation.</span><div class="ref-author">Transfusion Medicine Reviews, 21(2), 2007</div></div>
+      <div class="ref-item"><span class="ref-num">[4]</span><span class="ref-title">Caruana et al. Intelligible models for healthcare.</span><div class="ref-author">KDD 2015 — EBM en salut</div></div>
+      <div class="ref-item"><span class="ref-num">[5]</span><span class="ref-title">Chen & Guestrin. XGBoost.</span><div class="ref-author">KDD 2016</div></div>
+      <div class="ref-item"><span class="ref-num">[6]</span><span class="ref-title">Cohn et al. Plasma protein fractionation.</span><div class="ref-author">J. Am. Chem. Soc., 68(3), 1946 — Mètode de Cohn</div></div>
+      <div class="ref-item"><span class="ref-num">[7]</span><span class="ref-title">Doshi-Velez & Kim. Rigorous science of interpretable ML.</span><div class="ref-author">arXiv:1702.08608, 2017</div></div>
+      <div class="ref-item"><span class="ref-num">[8]</span><span class="ref-title">Guyon & Elisseeff. Variable and feature selection.</span><div class="ref-author">JMLR, 3:1157–1182, 2003</div></div>
+      <div class="ref-item"><span class="ref-num">[9]</span><span class="ref-title">Hastie & Tibshirani. Generalized Additive Models.</span><div class="ref-author">Chapman and Hall, 1990 — Base teòrica GAMs</div></div>
+      <div class="ref-item"><span class="ref-num">[10]</span><span class="ref-title">ISPE. GAMP 5.</span><div class="ref-author">Risk-Based Approach to GxP Computerized Systems, 2022</div></div>
+      <div class="ref-item"><span class="ref-num">[11]</span><span class="ref-title">Liu et al. Missing data in industrial datasets.</span><div class="ref-author">arXiv:2106.12345, 2021</div></div>
+      <div class="ref-item"><span class="ref-num">[12]</span><span class="ref-title">Lou et al. Accurate intelligible models with pairwise interactions.</span><div class="ref-author">KDD 2013 — GA2M, base dels EBM</div></div>
+      <div class="ref-item"><span class="ref-num">[13]</span><span class="ref-title">Lu et al. Learning under concept drift.</span><div class="ref-author">arXiv:2004.05785, 2020 — PSI, drift</div></div>
+      <div class="ref-item"><span class="ref-num">[14]</span><span class="ref-title">Lundberg & Lee. A unified approach to interpreting model predictions.</span><div class="ref-author">NeurIPS 30, 2017 — SHAP</div></div>
+      <div class="ref-item"><span class="ref-num">[15]</span><span class="ref-title">Nori et al. Intelligible models for healthcare (pneumonia risk).</span><div class="ref-author">KDD 2019</div></div>
+      <div class="ref-item"><span class="ref-num">[16]</span><span class="ref-title">Nori et al. A unified framework for ML interpretability.</span><div class="ref-author">arXiv:1909.09223, 2019</div></div>
+      <div class="ref-item"><span class="ref-num">[17]</span><span class="ref-title">PiML Team. EBM guide.</span><div class="ref-author">selfexplainml.github.io, 2025</div></div>
+      <div class="ref-item"><span class="ref-num">[18]</span><span class="ref-title">Rathore & Winkle. Quality by design for biopharmaceuticals.</span><div class="ref-author">Nature Biotechnology, 27(1), 2009</div></div>
+      <div class="ref-item"><span class="ref-num">[19]</span><span class="ref-title">Ribeiro et al. "Why should I trust you?" — LIME.</span><div class="ref-author">KDD 2016, pàg. 1135–1144</div></div>
+      <div class="ref-item"><span class="ref-num">[20]</span><span class="ref-title">Rudin et al. Interpretable ML: 10 grand challenges.</span><div class="ref-author">arXiv:2103.11251, 2021</div></div>
+      <div class="ref-item"><span class="ref-num">[21]</span><span class="ref-title">FDA. Data Integrity and CGMP compliance.</span><div class="ref-author">FDA Guidance for Industry, 2018 — ALCOA+</div></div>
+    </div>
+
+    <div class="card card-warn" style="margin-top:20px">
+      <h3>⚠️ Problema Pendent: Apèndix</h3>
+      <p>La pàgina 12 de l'article conté dos elements <strong>pendents d'inserir</strong>:</p>
+      <ul style="margin-left:18px;line-height:2;font-size:14px">
+        <li><strong>A1. Planificació temporal:</strong> [Diagrama de Gantt – pendent d'inserir]</li>
+        <li><strong>A2. Diagrama del procés RCA:</strong> [Diagrama RCA – pendent d'inserir]</li>
+      </ul>
+      <p class="text-muted" style="font-size:13px">Cal inserir aquests elements abans de la presentació final.</p>
+    </div>
+  </section>
+
+</div><!-- /container -->
+
+<script>
+  // Navigation
+  const nav = document.getElementById('mainNav');
+  const sections = document.querySelectorAll('.section');
+  const buttons = document.querySelectorAll('.nav-btn');
+  const visited = new Set();
+
+  nav.addEventListener('click', e => {
+    const btn = e.target.closest('.nav-btn');
+    if (!btn) return;
+    const sec = btn.dataset.sec;
+
+    buttons.forEach(b => b.classList.remove('active'));
+    sections.forEach(s => s.classList.remove('active'));
+
+    btn.classList.add('active');
+    document.getElementById('sec-' + sec).classList.add('active');
+    visited.add(sec);
+
+    // Update progress
+    const total = buttons.length;
+    const pct = Math.round((visited.size / total) * 100);
+    document.getElementById('progressFill').style.width = pct + '%';
+
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+
+  // Q&A accordion
+  document.querySelectorAll('.qa-q').forEach(q => {
+    q.addEventListener('click', () => {
+      const item = q.parentElement;
+      const wasOpen = item.classList.contains('open');
+      document.querySelectorAll('.qa-item').forEach(i => i.classList.remove('open'));
+      if (!wasOpen) item.classList.add('open');
+    });
+  });
+
+  // Mark first section as visited
+  visited.add('resum');
+  document.getElementById('progressFill').style.width = Math.round(1/9*100)+'%';
+</script>
+</body>
+</html>

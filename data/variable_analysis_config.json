@@ -1,0 +1,1135 @@
+{
+    "B1": {
+        "description": "Start date/time plasma thawing at -10C",
+        "phase": "Cryoprecipitate Recovery",
+        "actionable": false,
+        "correlated_variables": [
+            "B3",
+            "B2"
+        ]
+    },
+    "B2": {
+        "description": "End date/time plasma thawing at -10C",
+        "phase": "Cryoprecipitate Recovery",
+        "actionable": false,
+        "correlated_variables": [
+            "B3",
+            "B1"
+        ]
+    },
+    "B3": {
+        "description": "Total thaw time at -10C",
+        "phase": "Cryoprecipitate Recovery",
+        "actionable": false,
+        "correlated_variables": [
+            "B2",
+            "B1"
+        ]
+    },
+    "B4": {
+        "description": "Average staging time",
+        "phase": "Cryoprecipitate Recovery",
+        "actionable": false,
+        "correlated_variables": []
+    },
+    "B5": {
+        "description": "Start date/time pooling",
+        "phase": "Cryoprecipitate Recovery",
+        "actionable": false,
+        "correlated_variables": [
+            "B8",
+            "B6"
+        ]
+    },
+    "B6": {
+        "description": "End date/time pooling",
+        "phase": "Cryoprecipitate Recovery",
+        "actionable": false,
+        "correlated_variables": [
+            "B5",
+            "B8"
+        ]
+    },
+    "B7": {
+        "description": "Age of plasma when processed",
+        "phase": "Cryoprecipitate Recovery",
+        "actionable": false,
+        "correlated_variables": []
+    },
+    "B8": {
+        "description": "Total pooling time",
+        "phase": "Cryoprecipitate Recovery",
+        "actionable": false,
+        "correlated_variables": [
+            "B5",
+            "B6"
+        ]
+    },
+    "B9": {
+        "description": "Start date/time of cryo centing",
+        "phase": "Cryoprecipitate Recovery",
+        "actionable": false,
+        "correlated_variables": [
+            "B22",
+            "B23"
+        ]
+    },
+    "B10": {
+        "description": "BKA used for 1st bowl",
+        "phase": "Cryoprecipitate Recovery",
+        "actionable": true,
+        "correlated_variables": []
+    },
+    "B11": {
+        "description": "BKA used for 2nd bowl",
+        "phase": "Cryoprecipitate Recovery",
+        "actionable": true,
+        "correlated_variables": []
+    },
+    "B12": {
+        "description": "BKA used for 3rd bowl",
+        "phase": "Cryoprecipitate Recovery",
+        "actionable": true,
+        "correlated_variables": []
+    },
+    "B13": {
+        "description": "BKA used for 4th bowl",
+        "phase": "Cryoprecipitate Recovery",
+        "actionable": true,
+        "correlated_variables": []
+    },
+    "B14": {
+        "description": "BKA 1st bowl back pressure",
+        "phase": "Cryoprecipitate Recovery",
+        "actionable": false,
+        "correlated_variables": []
+    },
+    "B15": {
+        "description": "BKA 2nd bowl back pressure",
+        "phase": "Cryoprecipitate Recovery",
+        "actionable": false,
+        "correlated_variables": []
+    },
+    "B16": {
+        "description": "BKA 3rd bowl back pressure",
+        "phase": "Cryoprecipitate Recovery",
+        "actionable": false,
+        "correlated_variables": []
+    },
+    "B17": {
+        "description": "BKA 4th bowl back pressure",
+        "phase": "Cryoprecipitate Recovery",
+        "actionable": false,
+        "correlated_variables": []
+    },
+    "B18": {
+        "description": "BKA 1st bowl plasma centrifuged",
+        "phase": "Cryoprecipitate Recovery",
+        "actionable": true,
+        "correlated_variables": []
+    },
+    "B19": {
+        "description": "BKA 2nd bowl plasma centrifuged",
+        "phase": "Cryoprecipitate Recovery",
+        "actionable": true,
+        "correlated_variables": []
+    },
+    "B20": {
+        "description": "BKA 3rd bowl plasma centrifuged",
+        "phase": "Cryoprecipitate Recovery",
+        "actionable": true,
+        "correlated_variables": []
+    },
+    "B21": {
+        "description": "BKA 4th bowl plasma centrifuged",
+        "phase": "Cryoprecipitate Recovery",
+        "actionable": true,
+        "correlated_variables": []
+    },
+    "B22": {
+        "description": "End date/time of cryo centing",
+        "phase": "Cryoprecipitate Recovery",
+        "actionable": false,
+        "correlated_variables": [
+            "B9",
+            "B23"
+        ]
+    },
+    "B23": {
+        "description": "Total time of cryo centing",
+        "phase": "Cryoprecipitate Recovery",
+        "actionable": false,
+        "correlated_variables": [
+            "B9",
+            "B22"
+        ]
+    },
+    "B24": {
+        "description": "CryoPPT weight before chopping",
+        "phase": "Cryoprecipitate Recovery",
+        "actionable": false,
+        "correlated_variables": [
+            "B25"
+        ]
+    },
+    "B25": {
+        "description": "CryoPPT yield",
+        "phase": "Cryoprecipitate Recovery",
+        "actionable": false,
+        "correlated_variables": [
+            "B24"
+        ]
+    },
+    "B26": {
+        "description": "Plasma transferred to PTC",
+        "phase": "Cryoprecipitate Recovery",
+        "actionable": false,
+        "correlated_variables": []
+    },
+    "B27": {
+        "description": "Cryopoor plasma weight transferred to Frac",
+        "phase": "Cryoprecipitate Recovery",
+        "actionable": false,
+        "correlated_variables": []
+    },
+    "B28": {
+        "description": "Cryo material balance",
+        "phase": "Cryoprecipitate Recovery",
+        "actionable": false,
+        "correlated_variables": []
+    },
+    "B29": {
+        "description": "Cryopoor plasma pool IgG (1:100)",
+        "phase": "Cryoprecipitate Recovery",
+        "actionable": false,
+        "correlated_variables": [
+            "B31",
+            "B30",
+            "B32"
+        ]
+    },
+    "B30": {
+        "description": "Cryopoor plasma pool IgG (1:400)",
+        "phase": "Cryoprecipitate Recovery",
+        "actionable": false,
+        "correlated_variables": [
+            "B31",
+            "B29",
+            "B32"
+        ]
+    },
+    "B31": {
+        "description": "Cryopoor plasma pool total IgG (1:100)",
+        "phase": "Cryoprecipitate Recovery",
+        "actionable": false,
+        "correlated_variables": [
+            "B29",
+            "B30",
+            "B32"
+        ]
+    },
+    "B32": {
+        "description": "Cryopoor plasma pool total IgG (1:400)",
+        "phase": "Cryoprecipitate Recovery",
+        "actionable": false,
+        "correlated_variables": [
+            "B31",
+            "B29",
+            "B30"
+        ]
+    },
+    "C1": {
+        "description": "Tank used for FI (receiving tank of plasma)",
+        "phase": "Fraction I",
+        "actionable": true,
+        "correlated_variables": []
+    },
+    "C2": {
+        "description": "Start date/time of plasma receiving",
+        "phase": "Fraction I",
+        "actionable": false,
+        "correlated_variables": [
+            "C4",
+            "C3"
+        ]
+    },
+    "C3": {
+        "description": "End date/time of plasma receiving",
+        "phase": "Fraction I",
+        "actionable": false,
+        "correlated_variables": [
+            "C2",
+            "C4"
+        ]
+    },
+    "C4": {
+        "description": "Total time of plasma receiving",
+        "phase": "Fraction I",
+        "actionable": false,
+        "correlated_variables": [
+            "C2",
+            "C3"
+        ]
+    },
+    "C5": {
+        "description": "Initial sodium",
+        "phase": "Fraction I",
+        "actionable": false,
+        "correlated_variables": []
+    },
+    "C6": {
+        "description": "4.0 M NaCl buffer lot number",
+        "phase": "Fraction I",
+        "actionable": true,
+        "correlated_variables": []
+    },
+    "C7": {
+        "description": "4.0 M NaCl buffer amount used",
+        "phase": "Fraction I",
+        "actionable": true,
+        "correlated_variables": [
+            "C8"
+        ]
+    },
+    "C8": {
+        "description": "Final sodium",
+        "phase": "Fraction I",
+        "actionable": false,
+        "correlated_variables": [
+            "C7"
+        ]
+    },
+    "C9": {
+        "description": "Initial pH",
+        "phase": "Fraction I",
+        "actionable": false,
+        "correlated_variables": []
+    },
+    "C10": {
+        "description": "pH 4.0 SAAA buffer lot number",
+        "phase": "Fraction I",
+        "actionable": true,
+        "correlated_variables": []
+    },
+    "C11": {
+        "description": "pH 4.0 SAAA buffer titration amount for 1 L",
+        "phase": "Fraction I",
+        "actionable": false,
+        "correlated_variables": []
+    },
+    "C12": {
+        "description": "pH 4.0 SAAA buffer theoretical amount to add",
+        "phase": "Fraction I",
+        "actionable": true,
+        "correlated_variables": [
+            "C14",
+            "C13"
+        ]
+    },
+    "C13": {
+        "description": "pH 4.0 SAAA buffer amount used",
+        "phase": "Fraction I",
+        "actionable": true,
+        "correlated_variables": [
+            "C14",
+            "C12"
+        ]
+    },
+    "C14": {
+        "description": "Final pH",
+        "phase": "Fraction I",
+        "actionable": false,
+        "correlated_variables": [
+            "C13",
+            "C12"
+        ]
+    },
+    "C15": {
+        "description": "Start date/time of buffer addition",
+        "phase": "Fraction I",
+        "actionable": false,
+        "correlated_variables": []
+    },
+    "C16": {
+        "description": "Total time from plasma received until buffer addition",
+        "phase": "Fraction I",
+        "actionable": false,
+        "correlated_variables": []
+    },
+    "C17": {
+        "description": "95% EtOH first lot number",
+        "phase": "Fraction I",
+        "actionable": true,
+        "correlated_variables": []
+    },
+    "C18": {
+        "description": "95% EtOH first lot amount used",
+        "phase": "Fraction I",
+        "actionable": true,
+        "correlated_variables": [
+            "C29",
+            "C21",
+            "C20"
+        ]
+    },
+    "C19": {
+        "description": "95% EtOH second lot number",
+        "phase": "Fraction I",
+        "actionable": true,
+        "correlated_variables": []
+    },
+    "C20": {
+        "description": "95% EtOH second lot amount used",
+        "phase": "Fraction I",
+        "actionable": true,
+        "correlated_variables": [
+            "C29",
+            "C21",
+            "C18"
+        ]
+    },
+    "C21": {
+        "description": "95% EtOH total amount used",
+        "phase": "Fraction I",
+        "actionable": true,
+        "correlated_variables": [
+            "C29",
+            "C18",
+            "C20"
+        ]
+    },
+    "C22": {
+        "description": "Start date/time of EtOH addition",
+        "phase": "Fraction I",
+        "actionable": false,
+        "correlated_variables": [
+            "C23",
+            "C24"
+        ]
+    },
+    "C23": {
+        "description": "End date/time of EtOH addition",
+        "phase": "Fraction I",
+        "actionable": false,
+        "correlated_variables": [
+            "C24",
+            "C22"
+        ]
+    },
+    "C24": {
+        "description": "Total time of EtOH addition",
+        "phase": "Fraction I",
+        "actionable": false,
+        "correlated_variables": [
+            "C23",
+            "C22"
+        ]
+    },
+    "C25": {
+        "description": "Total time end of cryo centing to start of FI EtOH",
+        "phase": "Fraction I",
+        "actionable": false,
+        "correlated_variables": []
+    },
+    "C26": {
+        "description": "Total time start of buffer to start of EtOH",
+        "phase": "Fraction I",
+        "actionable": false,
+        "correlated_variables": []
+    },
+    "C27": {
+        "description": "Final pH after EtOH addition",
+        "phase": "Fraction I",
+        "actionable": false,
+        "correlated_variables": []
+    },
+    "C28": {
+        "description": "Amount of pH 4.0 SAAA buffer per cryopoor plasma",
+        "phase": "Fraction I",
+        "actionable": false,
+        "correlated_variables": []
+    },
+    "C29": {
+        "description": "Weight of FI at 8%",
+        "phase": "Fraction I",
+        "actionable": false,
+        "correlated_variables": [
+            "C21",
+            "C18",
+            "C20"
+        ]
+    },
+    "C30": {
+        "description": "Temperature of FI at 8%",
+        "phase": "Fraction I",
+        "actionable": false,
+        "correlated_variables": []
+    },
+    "C31": {
+        "description": "BKA35 used",
+        "phase": "Fraction I",
+        "actionable": false,
+        "correlated_variables": []
+    },
+    "C32": {
+        "description": "Start date/time of FI centing",
+        "phase": "Fraction I",
+        "actionable": false,
+        "correlated_variables": [
+            "C35",
+            "C34"
+        ]
+    },
+    "C33": {
+        "description": "Total FI mix time",
+        "phase": "Fraction I",
+        "actionable": false,
+        "correlated_variables": []
+    },
+    "C34": {
+        "description": "End date/time of FI centing",
+        "phase": "Fraction I",
+        "actionable": false,
+        "correlated_variables": [
+            "C32",
+            "C35"
+        ]
+    },
+    "C35": {
+        "description": "Total time of FI centing",
+        "phase": "Fraction I",
+        "actionable": false,
+        "correlated_variables": [
+            "C32",
+            "C34"
+        ]
+    },
+    "C36": {
+        "description": "FI PPT weight",
+        "phase": "Fraction I",
+        "actionable": false,
+        "correlated_variables": [
+            "C37"
+        ]
+    },
+    "C37": {
+        "description": "FI PPT yield",
+        "phase": "Fraction I",
+        "actionable": false,
+        "correlated_variables": [
+            "C36"
+        ]
+    },
+    "C38": {
+        "description": "FI supernatant weight",
+        "phase": "Fraction I",
+        "actionable": false,
+        "correlated_variables": []
+    },
+    "C39": {
+        "description": "FI material balance",
+        "phase": "Fraction I",
+        "actionable": false,
+        "correlated_variables": []
+    },
+    "C40": {
+        "description": "Combined Cryo and FI PPT yield",
+        "phase": "Fraction I",
+        "actionable": false,
+        "correlated_variables": []
+    },
+    "C41": {
+        "description": "FI supernatant IgG (1:100)",
+        "phase": "Fraction I",
+        "actionable": false,
+        "correlated_variables": [
+            "C43",
+            "C45",
+            "C46"
+        ]
+    },
+    "C42": {
+        "description": "IgG recovery plasma to FI supernatant (1:100)",
+        "phase": "Fraction I",
+        "actionable": false,
+        "correlated_variables": []
+    },
+    "C43": {
+        "description": "FI supernatant IgG (1:400)",
+        "phase": "Fraction I",
+        "actionable": false,
+        "correlated_variables": [
+            "C41",
+            "C45",
+            "C46"
+        ]
+    },
+    "C44": {
+        "description": "IgG recovery plasma to FI supernatant (1:400)",
+        "phase": "Fraction I",
+        "actionable": false,
+        "correlated_variables": []
+    },
+    "C45": {
+        "description": "FI supernatant total IgG (1:100)",
+        "phase": "Fraction I",
+        "actionable": false,
+        "correlated_variables": [
+            "C43",
+            "C41",
+            "C46"
+        ]
+    },
+    "C46": {
+        "description": "FI supernatant total IgG (1:400)",
+        "phase": "Fraction I",
+        "actionable": false,
+        "correlated_variables": [
+            "C43",
+            "C41",
+            "C45"
+        ]
+    },
+    "D1": {
+        "description": "Tank used for FII+III",
+        "phase": "Fraction II+III",
+        "actionable": true,
+        "correlated_variables": []
+    },
+    "D2": {
+        "description": "Initial pH",
+        "phase": "Fraction II+III",
+        "actionable": false,
+        "correlated_variables": []
+    },
+    "D3": {
+        "description": "pH 4.0 SAAA buffer lot number",
+        "phase": "Fraction II+III",
+        "actionable": true,
+        "correlated_variables": []
+    },
+    "D4": {
+        "description": "pH 4.0 SAAA buffer titration amount for 1 L",
+        "phase": "Fraction II+III",
+        "actionable": false,
+        "correlated_variables": []
+    },
+    "D5": {
+        "description": "pH 4.0 SAAA buffer theoretical amount to add",
+        "phase": "Fraction II+III",
+        "actionable": true,
+        "correlated_variables": [
+            "D7",
+            "D6"
+        ]
+    },
+    "D6": {
+        "description": "pH 4.0 SAAA buffer amount used",
+        "phase": "Fraction II+III",
+        "actionable": true,
+        "correlated_variables": [
+            "D5",
+            "D7"
+        ]
+    },
+    "D7": {
+        "description": "pH after buffer addition",
+        "phase": "Fraction II+III",
+        "actionable": false,
+        "correlated_variables": [
+            "D5",
+            "D6"
+        ]
+    },
+    "D8": {
+        "description": "Start date/time of buffer addition",
+        "phase": "Fraction II+III",
+        "actionable": false,
+        "correlated_variables": []
+    },
+    "D9": {
+        "description": "Total time end of FI centing to buffer addition",
+        "phase": "Fraction II+III",
+        "actionable": false,
+        "correlated_variables": []
+    },
+    "D10": {
+        "description": "Weight of FII+III at 8% EtOH",
+        "phase": "Fraction II+III",
+        "actionable": false,
+        "correlated_variables": []
+    },
+    "D11": {
+        "description": "95% EtOH first lot number",
+        "phase": "Fraction II+III",
+        "actionable": true,
+        "correlated_variables": []
+    },
+    "D12": {
+        "description": "95% EtOH first lot amount used",
+        "phase": "Fraction II+III",
+        "actionable": true,
+        "correlated_variables": [
+            "D15",
+            "D14",
+            "D23"
+        ]
+    },
+    "D13": {
+        "description": "95% EtOH second lot number",
+        "phase": "Fraction II+III",
+        "actionable": true,
+        "correlated_variables": []
+    },
+    "D14": {
+        "description": "95% EtOH second lot amount used",
+        "phase": "Fraction II+III",
+        "actionable": true,
+        "correlated_variables": [
+            "D15",
+            "D23",
+            "D12"
+        ]
+    },
+    "D15": {
+        "description": "95% EtOH total amount used",
+        "phase": "Fraction II+III",
+        "actionable": true,
+        "correlated_variables": [
+            "D14",
+            "D23",
+            "D12"
+        ]
+    },
+    "D16": {
+        "description": "Total 95% EtOH used for FI and FII+III",
+        "phase": "Fraction II+III",
+        "actionable": false,
+        "correlated_variables": []
+    },
+    "D17": {
+        "description": "Start date/time of EtOH addition",
+        "phase": "Fraction II+III",
+        "actionable": false,
+        "correlated_variables": [
+            "D18",
+            "D19"
+        ]
+    },
+    "D18": {
+        "description": "End date/time of EtOH addition",
+        "phase": "Fraction II+III",
+        "actionable": false,
+        "correlated_variables": [
+            "D17",
+            "D19"
+        ]
+    },
+    "D19": {
+        "description": "Total time of EtOH addition",
+        "phase": "Fraction II+III",
+        "actionable": false,
+        "correlated_variables": [
+            "D17",
+            "D18"
+        ]
+    },
+    "D20": {
+        "description": "Total time end of FI centing to start of FII+III EtOH",
+        "phase": "Fraction II+III",
+        "actionable": false,
+        "correlated_variables": []
+    },
+    "D21": {
+        "description": "Final pH after EtOH addition",
+        "phase": "Fraction II+III",
+        "actionable": false,
+        "correlated_variables": []
+    },
+    "D22": {
+        "description": "Amount of pH 4.0 SAAA buffer per FI supernatant",
+        "phase": "Fraction II+III",
+        "actionable": false,
+        "correlated_variables": []
+    },
+    "D23": {
+        "description": "Weight of FII+III at 20% EtOH",
+        "phase": "Fraction II+III",
+        "actionable": false,
+        "correlated_variables": [
+            "D15",
+            "D14",
+            "D12"
+        ]
+    },
+    "D24": {
+        "description": "Filter press used",
+        "phase": "Fraction II+III",
+        "actionable": true,
+        "correlated_variables": []
+    },
+    "D25": {
+        "description": "Sep line used for filtration",
+        "phase": "Fraction II+III",
+        "actionable": true,
+        "correlated_variables": []
+    },
+    "D26": {
+        "description": "Number of frames",
+        "phase": "Fraction II+III",
+        "actionable": true,
+        "correlated_variables": []
+    },
+    "D27": {
+        "description": "Thin paper first lot number",
+        "phase": "Fraction II+III",
+        "actionable": true,
+        "correlated_variables": []
+    },
+    "D28": {
+        "description": "Thin paper first lot amount used",
+        "phase": "Fraction II+III",
+        "actionable": true,
+        "correlated_variables": []
+    },
+    "D29": {
+        "description": "Thin paper second lot number",
+        "phase": "Fraction II+III",
+        "actionable": true,
+        "correlated_variables": []
+    },
+    "D30": {
+        "description": "Thin paper second lot amount used",
+        "phase": "Fraction II+III",
+        "actionable": true,
+        "correlated_variables": []
+    },
+    "D31": {
+        "description": "Total thin papers",
+        "phase": "Fraction II+III",
+        "actionable": false,
+        "correlated_variables": [
+            "D43",
+            "D47",
+            "D40",
+            "D36"
+        ]
+    },
+    "D32": {
+        "description": "Thick paper first lot number",
+        "phase": "Fraction II+III",
+        "actionable": true,
+        "correlated_variables": []
+    },
+    "D33": {
+        "description": "Thick paper first lot amount used",
+        "phase": "Fraction II+III",
+        "actionable": true,
+        "correlated_variables": []
+    },
+    "D34": {
+        "description": "Thick paper second lot number",
+        "phase": "Fraction II+III",
+        "actionable": true,
+        "correlated_variables": []
+    },
+    "D35": {
+        "description": "Thick paper second lot amount used",
+        "phase": "Fraction II+III",
+        "actionable": true,
+        "correlated_variables": []
+    },
+    "D36": {
+        "description": "Total thick papers",
+        "phase": "Fraction II+III",
+        "actionable": false,
+        "correlated_variables": [
+            "D43",
+            "D47",
+            "D40",
+            "D31"
+        ]
+    },
+    "D37": {
+        "description": "Start date/time of filtration",
+        "phase": "Fraction II+III",
+        "actionable": false,
+        "correlated_variables": [
+            "D39",
+            "D40"
+        ]
+    },
+    "D38": {
+        "description": "Total mixing time",
+        "phase": "Fraction II+III",
+        "actionable": false,
+        "correlated_variables": []
+    },
+    "D39": {
+        "description": "End date/time of filtration",
+        "phase": "Fraction II+III",
+        "actionable": false,
+        "correlated_variables": [
+            "D37",
+            "D40"
+        ]
+    },
+    "D40": {
+        "description": "Total time of filtration",
+        "phase": "Fraction II+III",
+        "actionable": false,
+        "correlated_variables": [
+            "D37",
+            "D47",
+            "D36",
+            "D31",
+            "D43",
+            "D39"
+        ]
+    },
+    "D41": {
+        "description": "Start date/time of blowdry",
+        "phase": "Fraction II+III",
+        "actionable": false,
+        "correlated_variables": []
+    },
+    "D42": {
+        "description": "Total time of postwash",
+        "phase": "Fraction II+III",
+        "actionable": false,
+        "correlated_variables": []
+    },
+    "D43": {
+        "description": "Total effective filtration time",
+        "phase": "Fraction II+III",
+        "actionable": false,
+        "correlated_variables": [
+            "D47",
+            "D40",
+            "D36",
+            "D31"
+        ]
+    },
+    "D44": {
+        "description": "End date/time of blowdry",
+        "phase": "Fraction II+III",
+        "actionable": false,
+        "correlated_variables": []
+    },
+    "D45": {
+        "description": "Total time of blowdry",
+        "phase": "Fraction II+III",
+        "actionable": false,
+        "correlated_variables": []
+    },
+    "D46": {
+        "description": "Tank used for FIV1+IV4",
+        "phase": "Fraction II+III",
+        "actionable": true,
+        "correlated_variables": []
+    },
+    "D47": {
+        "description": "Filtrate clarity",
+        "phase": "Fraction II+III",
+        "actionable": false,
+        "correlated_variables": [
+            "D43",
+            "D40",
+            "D36",
+            "D31"
+        ]
+    },
+    "D48": {
+        "description": "FII+III PPT weight",
+        "phase": "Fraction II+III",
+        "actionable": false,
+        "correlated_variables": [
+            "D49"
+        ]
+    },
+    "D49": {
+        "description": "FII+III PPT yield",
+        "phase": "Fraction II+III",
+        "actionable": false,
+        "correlated_variables": [
+            "D48"
+        ]
+    },
+    "D50": {
+        "description": "FII+III supernatant weight",
+        "phase": "Fraction II+III",
+        "actionable": false,
+        "correlated_variables": []
+    },
+    "D51": {
+        "description": "FII+III material balance",
+        "phase": "Fraction II+III",
+        "actionable": false,
+        "correlated_variables": []
+    },
+    "D52": {
+        "description": "Lot number of 20% EtOH used for postwash",
+        "phase": "Fraction II+III",
+        "actionable": true,
+        "correlated_variables": []
+    },
+    "D53": {
+        "description": "Amount of 20% EtOH used for postwash",
+        "phase": "Fraction II+III",
+        "actionable": false,
+        "correlated_variables": []
+    },
+    "D54": {
+        "description": "FII+III PPT lot number",
+        "phase": "Fraction II+III",
+        "actionable": true,
+        "correlated_variables": []
+    },
+    "D55": {
+        "description": "FII+III PPT protein",
+        "phase": "Fraction II+III",
+        "actionable": false,
+        "correlated_variables": [
+            "D62",
+            "D60",
+            "D61",
+            "D63"
+        ]
+    },
+    "D56": {
+        "description": "FII+III PPT purity albumin",
+        "phase": "Fraction II+III",
+        "actionable": false,
+        "correlated_variables": []
+    },
+    "D57": {
+        "description": "FII+III PPT purity alpha globulin",
+        "phase": "Fraction II+III",
+        "actionable": false,
+        "correlated_variables": []
+    },
+    "D58": {
+        "description": "FII+III PPT purity beta globulin",
+        "phase": "Fraction II+III",
+        "actionable": false,
+        "correlated_variables": []
+    },
+    "D59": {
+        "description": "FII+III PPT purity gamma globulin",
+        "phase": "Fraction II+III",
+        "actionable": false,
+        "correlated_variables": []
+    },
+    "D60": {
+        "description": "FII+III PPT total protein",
+        "phase": "Fraction II+III",
+        "actionable": false,
+        "correlated_variables": [
+            "D61",
+            "D62",
+            "D55",
+            "D63",
+            "D48",
+            "D49"
+        ]
+    },
+    "D61": {
+        "description": "FII+III PPT total gamma protein",
+        "phase": "Fraction II+III",
+        "actionable": false,
+        "correlated_variables": [
+            "D62",
+            "D60",
+            "D55",
+            "D63"
+        ]
+    },
+    "D62": {
+        "description": "Gamma recovery plasma to FII+III PPT (1:100)",
+        "phase": "Fraction II+III",
+        "actionable": false,
+        "correlated_variables": [
+            "D61",
+            "D60",
+            "D55",
+            "D63"
+        ]
+    },
+    "D63": {
+        "description": "Gamma recovery plasma to FII+III PPT (1:400)",
+        "phase": "Fraction II+III",
+        "actionable": false,
+        "correlated_variables": [
+            "D61",
+            "D62",
+            "D60",
+            "D55"
+        ]
+    },
+    "D20a": {
+        "description": "Fr II+III weight after alcohol addition",
+        "phase": "Fraction II+III",
+        "actionable": false,
+        "correlated_variables": [
+            "D20b",
+            "D20d"
+        ]
+    },
+    "D20b": {
+        "description": "Fr II+III pH after alcohol addition",
+        "phase": "Fraction II+III",
+        "actionable": false,
+        "correlated_variables": [
+            "D20d",
+            "D20a"
+        ]
+    },
+    "D20c": {
+        "description": "pH 4.0 SAAA Lot Number (Alcohol adjustment)",
+        "phase": "Fraction II+III",
+        "actionable": true,
+        "correlated_variables": []
+    },
+    "D20d": {
+        "description": "Quantity used to adjust Fr II+III after alcohol",
+        "phase": "Fraction II+III",
+        "actionable": false,
+        "correlated_variables": [
+            "D20b",
+            "D20a"
+        ]
+    },
+    "D36a": {
+        "description": "Fr II+III pH check prior to filtration",
+        "phase": "Fraction II+III",
+        "actionable": false,
+        "correlated_variables": [
+            "D36d",
+            "D36c"
+        ]
+    },
+    "D36b": {
+        "description": "Retitration pH 4.0 SAAA Lot Number",
+        "phase": "Fraction II+III",
+        "actionable": true,
+        "correlated_variables": []
+    },
+    "D36c": {
+        "description": "Retitration quantity prior to filtration",
+        "phase": "Fraction II+III",
+        "actionable": false,
+        "correlated_variables": [
+            "D36d",
+            "D36a"
+        ]
+    },
+    "D36d": {
+        "description": "Final Fr II+III pH prior to start of filtration",
+        "phase": "Fraction II+III",
+        "actionable": false,
+        "correlated_variables": [
+            "D36a",
+            "D36c"
+        ]
+    }
+}

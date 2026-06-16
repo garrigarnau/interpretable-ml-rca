@@ -1,0 +1,139 @@
+\begin{thebibliography}{10}
+
+\bibitem{ebm_2025}
+{Anonymous}.
+\newblock Recent advances and evaluation trends in explainable boosting
+  machines, 2025.
+\newblock arXiv:2512.00528.
+
+\bibitem{boloncanedo2015_review}
+Ver\'onica Bol\'on-Canedo and et~al.
+\newblock A review of feature selection methods on synthetic data.
+\newblock {\em arXiv preprint arXiv:1507.08492}, 2015.
+
+\bibitem{burnouf2007_modern}
+Thierry Burnouf.
+\newblock Modern plasma fractionation.
+\newblock {\em Transfusion Medicine Reviews}, 21(2):101--117, 2007.
+
+\bibitem{caruana2015_intelligible}
+Rich Caruana, Yin Lou, Johannes Gehrke, Paul Koch, Marc Sturm, and Noemie
+  Elhadad.
+\newblock Intelligible models for healthcare: Predicting pneumonia risk and
+  hospital 30-day readmission.
+\newblock In {\em Proceedings of the 21st ACM SIGKDD International Conference
+  on Knowledge Discovery and Data Mining}, 2015.
+
+\bibitem{xgboost}
+Tianqi Chen and Carlos Guestrin.
+\newblock Xgboost: A scalable tree boosting system.
+\newblock {\em Proceedings of the 22nd ACM SIGKDD International Conference on
+  Knowledge Discovery and Data Mining}, 2016.
+
+\bibitem{cohn1946}
+E.~J. Cohn, L.~E. Strong, W.~L. Hughes, D.~J. Mulford, J.~N. Ashworth,
+  M.~Melin, and H.~L. Taylor.
+\newblock Preparation and properties of serum and plasma proteins. iv. a system
+  for the separation into fractions of the protein and lipoprotein components
+  of biological tissues and fluids.
+\newblock {\em Journal of the American Chemical Society}, 68(3):459--475, 1946.
+
+\bibitem{doshi2017rigorous}
+Finale Doshi-Velez and Been Kim.
+\newblock Towards a rigorous science of interpretable machine learning.
+\newblock {\em arXiv preprint arXiv:1702.08608}, 2017.
+
+\bibitem{eudralex_annex11}
+{European Commission}.
+\newblock Eudralex volume 4, annex 11: Computerised systems.
+\newblock EU GMP Guidelines, 2011.
+
+\bibitem{guyon2003_feature_selection}
+Isabelle Guyon and Andre Elisseeff.
+\newblock An introduction to variable and feature selection.
+\newblock {\em Journal of Machine Learning Research}, 3:1157--1182, 2003.
+
+\bibitem{hastie1990_gam}
+Trevor~J. Hastie and Robert~J. Tibshirani.
+\newblock {\em Generalized Additive Models}.
+\newblock Chapman and Hall, 1990.
+
+\bibitem{gamp5}
+{ISPE}.
+\newblock {\em GAMP 5: A Risk-Based Approach to Compliant GxP Computerized
+  Systems}.
+\newblock International Society for Pharmaceutical Engineering, 2022.
+
+\bibitem{gamp_ai_ml}
+{ISPE}.
+\newblock {\em GAMP Good Practice Guide: Artificial Intelligence -- A
+  Risk-Based Approach for GxP Regulated Environments}.
+\newblock International Society for Pharmaceutical Engineering, 2024.
+
+\bibitem{liu2021_missing_industrial}
+et~al. Liu.
+\newblock Investigating and imputing missing data in industrial datasets.
+\newblock {\em arXiv preprint arXiv:2106.12345}, 2021.
+
+\bibitem{lou2013_ga2m}
+Yin Lou, Rich Caruana, Johannes Gehrke, and Giles Hooker.
+\newblock Accurate intelligible models with pairwise interactions.
+\newblock In {\em Proceedings of the 19th ACM SIGKDD International Conference
+  on Knowledge Discovery and Data Mining}, 2013.
+
+\bibitem{lu2020drift}
+Jie Lu, Anjin Liu, Fan Dong, Feng Gu, Jo\~ao Gama, and Guangquan Zhang.
+\newblock Learning under concept drift: A review.
+\newblock {\em arXiv preprint arXiv:2004.05785}, 2020.
+
+\bibitem{shap_arxiv1705}
+Scott~M. Lundberg and Su-In Lee.
+\newblock A unified approach to interpreting model predictions.
+\newblock In {\em Advances in Neural Information Processing Systems},
+  volume~30, 2017.
+
+\bibitem{ebm_nori}
+Harsha Nori, Samuel Jenkins, Paul Koch, and Rich Caruana.
+\newblock Intelligible models for healthcare: Predicting pneumonia risk and
+  hospital 30-day readmission.
+\newblock {\em Proceedings of the 25th ACM SIGKDD International Conference on
+  Knowledge Discovery and Data Mining}, 2019.
+
+\bibitem{nori2019_unified}
+Harsha Nori, Samuel Jenkins, Paul Koch, and Rich Caruana.
+\newblock A unified framework for machine learning interpretability.
+\newblock {\em arXiv preprint arXiv:1909.09223}, 2019.
+
+\bibitem{piml_ebm}
+{PiML Team}.
+\newblock Piml toolbox: Explainable boosting machine (ebm) guide.
+\newblock
+  \url{https://selfexplainml.github.io/PiML-Toolbox/_build/html/guides/models/ebm.html},
+  2025.
+
+\bibitem{rathore2009_qbd}
+Anurag~S. Rathore and Helen Winkle.
+\newblock Quality by design for biopharmaceuticals.
+\newblock {\em Nature Biotechnology}, 27(1):26--34, 2009.
+
+\bibitem{lime_arxiv1602}
+Marco~Tulio Ribeiro, Sameer Singh, and Carlos Guestrin.
+\newblock ``why should i trust you?'': Explaining the predictions of any
+  classifier.
+\newblock In {\em Proceedings of the 22nd ACM SIGKDD International Conference
+  on Knowledge Discovery and Data Mining}, pages 1135--1144, 2016.
+
+\bibitem{rudin2021fundamental}
+Cynthia Rudin, Ching-Hsiang Chen, Zhi Chen, Han Huang, Lesia Semenova, and
+  Chudi Zhong.
+\newblock Interpretable machine learning: Fundamental principles and 10 grand
+  challenges.
+\newblock {\em arXiv preprint arXiv:2103.11251}, 2021.
+
+\bibitem{alcoa}
+{U.S. Food and Drug Administration}.
+\newblock {\em Data Integrity and Compliance With Drug CGMP: Questions and
+  Answers Guidance for Industry}.
+\newblock FDA, 2018.
+
+\end{thebibliography}

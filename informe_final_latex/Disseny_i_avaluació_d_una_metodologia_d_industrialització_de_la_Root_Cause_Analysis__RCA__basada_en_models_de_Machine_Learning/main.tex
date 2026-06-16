@@ -1,0 +1,146 @@
+\documentclass[10pt,a4paper,twocolumn,twoside]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[catalan]{babel}
+\usepackage{multicol}
+\usepackage{graphicx}
+\usepackage{fancyhdr}
+\usepackage{times}
+\usepackage{titlesec}
+\usepackage{multirow}
+\usepackage{lettrine}
+\usepackage[top=2cm, bottom=1.5cm, left=2cm, right=2cm]{geometry}
+\usepackage[figurename=Fig.,tablename=TAULA]{caption}
+\captionsetup[table]{textfont=sc}
+
+% Additional packages needed by content
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{booktabs}
+\usepackage{csvsimple}
+\usepackage{subcaption}
+\usepackage{longtable}
+\usepackage{array}
+\usepackage[hypertexnames=false]{hyperref}
+\usepackage{float}
+
+\author{\LARGE\sffamily Arnau Garriga Torné}
+\title{\LARGE{\sffamily Disseny i avaluació d'una metodologia d'industrialització de la Root Cause Analysis (RCA) basada en models de Machine Learning}}
+\date{}
+
+\newcommand\blfootnote[1]{%
+  \begingroup
+  \renewcommand\thefootnote{}\footnote{#1}%
+  \addtocounter{footnote}{-1}%
+  \endgroup
+}
+
+\titleformat{\section}
+{\large\sffamily\scshape\bfseries}
+{\textbf{\thesection}}{1em}{}
+
+\begin{document}
+
+\fancyhead[LO]{\scriptsize AUTOR: Arnau Garriga Torné. TÍTOL: Disseny i avaluació d'una metodologia d'industrialització de la RCA basada en ML}
+\fancyhead[RO]{\thepage} \fancyhead[LE]{\thepage}
+\fancyhead[RE]{\scriptsize EE/UAB TFG DADES: Industrialització RCA amb ML}
+
+\fancyfoot[CO,CE]{}
+
+\fancypagestyle{primerapagina}
+{
+   \fancyhf{}
+   \fancyhead[L]{\scriptsize TFG EN ENGINYERIA DADES, ESCOLA D'ENGINYERIA (EE), UNIVERSITAT AUTÒNOMA DE BARCELONA (UAB)}
+   \fancyfoot[C]{\scriptsize Juny de 2026, Escola d'Enginyeria (UAB)}
+}
+
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+\pagestyle{fancy}
+
+\twocolumn[\begin{@twocolumnfalse}
+
+\maketitle
+
+\thispagestyle{primerapagina}
+
+\begin{center}
+\parbox{0.915\textwidth}
+{\sffamily
+\textbf{Resum--}
+Aquest treball proposa i valida una metodologia d'industrialització de la Root Cause Analysis (RCA) basada en models de Machine Learning interpretables per a entorns farmacèutics regulats. La proposta s'estructura en cinc capes: anàlisi exploratòria, modelització predictiva, estratègia \emph{filter-then-interact} amb Explainable Boosting Machines (EBM), capa d'explicabilitat i capa de validació i industrialització. El conjunt de dades utilitzat per a la modelització inclou 956 mostres i 56 variables originals, amb validació creuada de 5 folds i criteris de robustesa orientats a ús operatiu. Els resultats mostren una millora progressiva respecte al baseline Lasso: reducció del 15.6\% en MAE i del 16.9\% en RMSE en la millor configuració de Fase 4. La configuració Robust (Leaf=10) obté el millor equilibri global (MAE = 0.950, RMSE = 1.368, R² = 0.422), mantenint estabilitat entre folds i facilitant la priorització de factors crítics en RCA. Com a contribució principal, el treball demostra que una estratègia EBM interpretable-by-design permet combinar rendiment predictiu, traçabilitat i utilitat operativa, i constitueix una base sòlida per a desplegament progressiu en entorns GMP/QMS amb monitoratge de \emph{drift} i governança de cicle de vida del model.
+\\
+\\
+\textbf{Paraules clau-- } Root Cause Analysis, Explainable Boosting Machine, interpretabilitat, validació creuada, industrialització, qualitat farmacèutica.\\
+\\
+\bigskip
+\\
+\textbf{Abstract--} This work proposes and validates an industrialisation methodology for Root Cause Analysis (RCA) based on interpretable Machine Learning models for regulated pharmaceutical environments. The proposal is structured in five layers: exploratory analysis, predictive modelling, a \emph{filter-then-interact} strategy with Explainable Boosting Machines (EBM), an explainability layer and a validation and industrialisation layer. The dataset used for modelling includes 956 samples and 56 original variables, with 5-fold cross-validation and robustness criteria oriented to operational use. Results show progressive improvement over the Lasso baseline: 15.6\% reduction in MAE and 16.9\% in RMSE in the best Phase 4 configuration. The Robust (Leaf=10) configuration achieves the best overall balance (MAE = 0.950, RMSE = 1.368, R² = 0.422), maintaining stability across folds and facilitating the prioritisation of critical factors in RCA. As a main contribution, the work demonstrates that an interpretable-by-design EBM strategy can combine predictive performance, traceability and operational utility, constituting a solid foundation for progressive deployment in GMP/QMS environments with drift monitoring and model lifecycle governance.
+\\
+\\
+\textbf{Keywords-- } Root Cause Analysis, Explainable Boosting Machine, interpretability, cross-validation, industrialisation, pharmaceutical quality.\\
+}
+
+\bigskip
+
+{\vrule depth 0pt height 0.5pt width 4cm\hspace{7.5pt}%
+\raisebox{-3.5pt}{\fontfamily{pzd}\fontencoding{U}\fontseries{m}\fontshape{n}\fontsize{11}{12}\selectfont\char70}%
+\hspace{7.5pt}\vrule depth 0pt height 0.5pt width 4cm\relax}
+
+\end{center}
+
+\bigskip
+
+\end{@twocolumnfalse}]
+
+\blfootnote{$\bullet$ E-mail de contacte: arnaugarrigatorne@gmail.com}
+\blfootnote{$\bullet$ Treball tutoritzat per: Joan Piedrafita (Enginyeria de dades)}
+\blfootnote{$\bullet$ Curs 2025/26}
+
+\input{parts/01_introduccio}
+\input{parts/03_estat_art}
+\input{parts/04_dades}
+\input{parts/05_metodologia}
+\input{parts/06_experiments}
+\input{parts/09_conclusions}
+
+\section*{Ús de la Intel·ligència Artificial}
+
+En el desenvolupament d'aquest treball s'han utilitzat tres eines d'IA generativa com a suport:
+
+\begin{itemize}
+    \item \textbf{Claude (Anthropic):} Assistència en programació (depuració de codi Python, optimització de pipelines de dades, generació d'scripts per a visualització i benchmarking), revisió i redacció (estructuració de seccions, correcció d'estil i formatació LaTeX), i anàlisi exploratòria (discussió de resultats, interpretació de shape functions i formulació d'hipòtesis).
+    \item \textbf{Perplexity AI:} Recerca bibliogràfica i exploració de l'estat de l'art — cerca de publicacions rellevants sobre EBM, GAMs, drift monitoring i validació en entorns GxP, així com verificació de cites i fonts.
+    \item \textbf{Gemini (Google):} Suport complementari en revisió de textos, generació de resums i contrast d'idees durant les fases inicials del projecte.
+\end{itemize}
+
+En tots els casos, l'autor ha mantingut el criteri de decisió, la validació dels resultats i la responsabilitat sobre el contingut final. La IA no ha participat en la presa de decisions metodològiques ni en la interpretació de domini del procés farmacèutic.
+
+\section*{Agraïments}
+
+Vull agrair al meu tutor Joan Piedrafita el suport i orientació durant tot el projecte.
+
+\renewcommand{\refname}{Bibliografia}
+\bibliographystyle{plain}
+\bibliography{references}
+
+\onecolumn
+\section*{Apèndix}
+
+\subsection*{A1. Planificació temporal del projecte}
+
+% TODO: Inserir diagrama de Gantt
+\begin{center}
+\textit{[Diagrama de Gantt -- pendent d'inserir]}
+\end{center}
+
+\subsection*{A2. Diagrama del procés RCA}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.85\textwidth]{images/mapa-conceptual.png}
+    \caption{Comparació del flux RCA tradicional (manual) i el flux RCA assistit per ML proposat en aquest treball. El sistema ML prioritza hipòtesis amb evidència quantitativa; l'expert manté el control de la decisió final (\emph{human-in-the-loop}).}
+    \label{fig:mapa_conceptual}
+\end{figure}
+
+\end{document}

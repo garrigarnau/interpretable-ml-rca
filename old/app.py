@@ -18,7 +18,7 @@ import tempfile
 import os
 
 # Import data cleaning functions
-from data_cleaning import (
+from scripts.data_cleaning import (
     load_data,
     load_variable_descriptions,
     classify_batch_quality,
@@ -40,7 +40,7 @@ from data_cleaning import (
 )
 
 # Import dataset overview functions
-from dataset_overview import (
+from scripts.dataset_overview import (
     display_overview_metrics,
     display_target_variable_visualization,
     display_target_by_quality,
@@ -403,17 +403,22 @@ if df is not None:
                 st.session_state.columns_to_remove = []
                 st.rerun()
         
-        # Additional button row for time columns
+        # Additional button row for time + lot-number columns
         col_btn_row3, col_btn_row4 = st.columns(2)
         
         with col_btn_row3:
-            # Get time columns that exist in the dataset
+            # Get time columns and lot-number columns that exist in the dataset
             existing_time_cols = get_time_columns_in_dataframe(df)
-            if st.button(f"🕐 Select All Time Parameters ({len(existing_time_cols)} columns)", use_container_width=True):
-                # Add time parameters to existing selection using merge function
+            existing_lot_cols = [col for col in lot_number_cols if col in df.columns]
+            combined_time_lot_cols = sorted(set(existing_time_cols + existing_lot_cols))
+            if st.button(
+                f"🕐 Select Time + Lot Parameters ({len(combined_time_lot_cols)} columns)",
+                use_container_width=True
+            ):
+                # Add time + lot parameters to existing selection using merge function
                 st.session_state.columns_to_remove = merge_column_selections(
                     st.session_state.columns_to_remove, 
-                    existing_time_cols
+                    combined_time_lot_cols
                 )
                 st.rerun()
         
@@ -432,10 +437,23 @@ if df is not None:
                 })
                 st.dataframe(time_col_info, use_container_width=True, hide_index=True)
                 st.caption("These are all start/end time parameters from Phases B, C, and D")
+
+        existing_lot_cols = [col for col in lot_number_cols if col in df.columns]
+        if existing_lot_cols:
+            with st.expander("ℹ️ View Lot Number Parameters"):
+                lot_col_info = pd.DataFrame({
+                    'Column': existing_lot_cols,
+                    'Description': [var_descriptions.get(col, 'N/A')[:150] for col in existing_lot_cols],
+                    '% Missing': [missing_pct_per_col_all.get(col, 0) for col in existing_lot_cols]
+                })
+                st.dataframe(lot_col_info, use_container_width=True, hide_index=True)
+                st.caption("These lot-number parameters can now be removed together with time parameters.")
         
         # Multiselect for custom selection
         # Include all columns as options (exclude target and derived features)
-        excluded_from_removal = ['D49', 'Batch_Quality'] + selected_categorical_cols  # Keep selected categorical columns
+        lot_cols_in_df = [col for col in lot_number_cols if col in df.columns]
+        protected_categorical_cols = [col for col in selected_categorical_cols if col not in lot_cols_in_df]
+        excluded_from_removal = ['D49', 'Batch_Quality'] + protected_categorical_cols
         all_removable_cols = [col for col in df.columns if col not in excluded_from_removal]
 
         # Keep selection aligned with current threshold and available parameters
@@ -1292,9 +1310,9 @@ if df is not None:
                                 predicted_from_components = base_value + float(np.sum(contribution_scores))
                                 predicted_from_model = float(ebm_model_local.predict(single_batch_X)[0])
 
-                                wf_x = ['Historical Average Yield'] + step_labels + ['Predicted D49 Yield']
-                                wf_y = [base_value] + contribution_scores + [predicted_from_components]
-                                wf_measure = ['absolute'] + ['relative'] * len(contribution_scores) + ['total']
+                                wf_x = ['Start (0)', 'Model Baseline'] + step_labels + ['Predicted D49 Yield']
+                                wf_y = [0.0, base_value] + contribution_scores + [predicted_from_components]
+                                wf_measure = ['absolute', 'relative'] + ['relative'] * len(contribution_scores) + ['total']
 
                                 fig_local_waterfall = go.Figure(
                                     go.Waterfall(
@@ -1316,7 +1334,7 @@ if df is not None:
                                 st.plotly_chart(fig_local_waterfall, use_container_width=True)
 
                                 wf_m1, wf_m2, wf_m3 = st.columns(3)
-                                wf_m1.metric("Historical Average Yield", f"{base_value:.4f}")
+                                wf_m1.metric("Model Baseline", f"{base_value:.4f}")
                                 wf_m2.metric("Predicted D49 (Waterfall Total)", f"{predicted_from_components:.4f}")
                                 wf_m3.metric("Predicted D49 (EBM)", f"{predicted_from_model:.4f}")
 
@@ -1370,8 +1388,8 @@ if df is not None:
                                     st.caption("No risk flags detected for this selected batch.")
 
                                 st.caption(
-                                    "Waterfall total is calculated as base value + sum of local feature contributions "
-                                    "for the selected batch."
+                                    "Waterfall starts at 0, then adds model baseline and local feature contributions "
+                                    "to reach the selected batch prediction."
                                 )
                         else:
                             st.info("Local waterfall is available after successful EBM training data is generated.")
