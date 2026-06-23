@@ -18,13 +18,13 @@ Aquest treball proposa una metodologia estructurada en cinc capes: anàlisi expl
 
 Activitats d'exploració i comprensió del conjunt de dades:
 
-\begin{itemize}
+\begin{enumerate}
     \item \textbf{Anàlisi de la distribució de variables:} Estudi de la distribució de la variable objectiu (qualitat de la proteïna) i de les variables predictores.
     \item \textbf{Detecció de valors atípics:} Identificació de dades anòmales que poden afectar el rendiment dels models.
     \item \textbf{Anàlisi de correlacions:} Estudi de les relacions lineals entre variables per detectar redundàncies i possibles col·linealitats.
     \item \textbf{Reducció de dimensionalitat basada en correlació:} Eliminació de variables altament correlacionades per simplificar el model i evitar multicolinealitat.
     \item \textbf{Anàlisi de qualitat de les dades:} Avaluació de la completesa i consistència de les dades, així com la identificació de valors faltants.
-\end{itemize}
+\end{enumerate}
 
 \subsection{Capa de modelització de ML}
 \label{subsec:capa_modelitzacio_ml}
@@ -56,14 +56,7 @@ L'estratègia \emph{filter-then-interact} captura efectes principals i interacci
 
 S'entrena un model EBM sense interaccions (\texttt{interactions=0}) per capturar únicament els efectes principals de cada variable.
 
-Els hiperparàmetres utilitzats en aquesta fase són:
-\begin{itemize}
-    \item \texttt{interactions = 0}
-    \item \texttt{learning\_rate = 0.05}
-    \item \texttt{max\_bins = 256}
-    \item \texttt{max\_rounds = 5000}
-    \item \texttt{min\_samples\_leaf = 2}
-\end{itemize}
+Hiperparàmetres: \texttt{interactions=0}, \texttt{learning\_rate=0.05}, \texttt{max\_bins=256}, \texttt{max\_rounds=5000}, \texttt{min\_samples\_leaf=2}.
 
 El model EBM va aconseguir MAE = 1.072, RMSE = 1.602 i R² = 0.368, superant el baseline Lasso i capturant relacions no lineals.
 
@@ -91,29 +84,22 @@ La configuració final va seleccionar les \textbf{15 característiques més impo
 
 La tercera i última fase entrena un model EBM sobre el conjunt reduït de característiques seleccionades en la Fase 2, activant la detecció automàtica d'interaccions. Aquesta configuració permet que el model identifiqui fins a 25 parells d'interaccions significatives (\texttt{interactions=25}) de manera automàtica.
 
-Els hiperparàmetres utilitzats en aquesta fase són:
-\begin{itemize}
-    \item \texttt{interactions = 10} (detecció automàtica)
-    \item \texttt{learning\_rate = 0.05}
-    \item \texttt{max\_bins = 256}
-    \item \texttt{max\_rounds = 5000}
-    \item \texttt{min\_samples\_leaf = 10}
-\end{itemize}
+Hiperparàmetres: \texttt{interactions=10} (detecció automàtica), \texttt{learning\_rate=0.05}, \texttt{max\_bins=256}, \texttt{max\_rounds=5000}, \texttt{min\_samples\_leaf=10}.
 
 El model final va aconseguir un rendiment significativament millorat: MAE = 1.018, RMSE = 1.466 i R² = 0.470, demostrant l'efectivitat de la captura d'interaccions de manera controlada.
 
 \begin{figure}[htbp]
     \centering
-    \begin{subfigure}[b]{0.48\textwidth}
+    \begin{subfigure}[b]{\columnwidth}
         \centering
-        \includegraphics[width=\textwidth]{images/plot_importances.png}
+        \includegraphics[width=0.95\columnwidth]{images/plot_importances.png}
         \caption{Efectes principals}
         \label{fig:ebm_phase3_main}
     \end{subfigure}
-    \hfill
-    \begin{subfigure}[b]{0.48\textwidth}
+    \vspace{0.3em}
+    \begin{subfigure}[b]{\columnwidth}
         \centering
-        \includegraphics[width=\textwidth]{images/fig_014__extract_learned_terms_.png}
+        \includegraphics[width=0.95\columnwidth]{images/fig_014__extract_learned_terms_.png}
         \caption{Interaccions entre variables}
         \label{fig:ebm_phase3_interactions}
     \end{subfigure}

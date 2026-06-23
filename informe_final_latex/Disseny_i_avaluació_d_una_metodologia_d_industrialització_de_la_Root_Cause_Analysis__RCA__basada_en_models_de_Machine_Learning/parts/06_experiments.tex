@@ -62,6 +62,13 @@ Simple/Stable & 0.963 $\pm$ 0.069 & 1.411 $\pm$ 0.162 & 0.387 $\pm$ 0.108 \\
 
 Les configuracions amb més regularització (Robust, Current Best) superen les més complexes, confirmant que amb datasets limitats (956 mostres) la simplificació del model és més beneficiosa que l'increment de capacitat representacional.
 
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=\columnwidth]{images/fig_tradeoff_r2_robustness.png}
+    \caption{Compromís rendiment--robustesa: R² mitjà vs variabilitat entre folds (std R²). La Fase 3 maximitza R² però amb major inestabilitat; la configuració Robust (Leaf=10) ocupa la posició òptima combinant alt rendiment i baixa variància, justificant la seva selecció per a ús industrial.}
+    \label{fig:tradeoff_r2_robustness}
+\end{figure}
+
 \subsection{Comparació amb models alternatius}
 \label{subsec:comparacio_models_alternatius}
 
@@ -231,4 +238,6 @@ Un resultat rellevant és que la interpretabilitat s'obté de manera \emph{nativ
 
 L'enfoc data-driven aporta consistència entre casos, velocitat en priorització i capacitat de tractar múltiples variables simultàniament. Tanmateix, l'RCA tradicional manté fortaleses en profunditat causal contextual i integració de coneixement tàcit. La proposta més robusta és una estratègia \emph{human-in-the-loop}: el model estructura i prioritza l'evidència; l'equip expert valida, contrasta i decideix accions finals. La Figura~\ref{fig:mapa_conceptual} (Apèndix A1) il·lustra esquemàticament ambdós fluxos i el posicionament del sistema ML com a eina de suport dins del procés RCA.
 
-Limitacions identificades: (1) dataset efectiu acotat a 956 mostres; (2) dependència de qualitat de registre; (3) risc de \emph{drift} amb canvis operatius \cite{lu2020drift}; (4) lectura causal limitada per natura observacional; (5) bretxa d'implementació per integració GMP/QMS. El model és un \emph{decision support system}, no substitut de revisió experta.
+En la pràctica, el flux \emph{human-in-the-loop} s'estructura en quatre passos seqüencials. (1)~\textbf{Detecció:} el sistema identifica automàticament lots amb rendiment inferior al previst i genera una alerta amb la magnitud de la desviació. (2)~\textbf{Priorització:} per a cada lot alertat, l'EBM descompon la predicció en contribucions individuals, presentant a l'analista un rànquing ordenat de variables amb impacte negatiu ---cadascuna amb la seva \emph{shape function} i el rang operatiu òptim associat. (3)~\textbf{Validació experta:} l'enginyer de procés contrasta les hipòtesis suggerides amb el context operatiu del lot (registres de planta, incidències, canvis de material) i descarta o confirma cada factor. (4)~\textbf{Acció:} les causes validades es documenten formalment i alimenten el cicle CAPA (\emph{Corrective and Preventive Actions}), mantenint la traçabilitat requerida per GxP. En cap punt el model pren decisions autònomes: actua com a filtre quantitatiu que redueix l'espai d'investigació de desenes de variables a 3--5 hipòtesis prioritzades, accelerant el temps de resolució sense substituir el criteri de domini.
+
+Limitacions identificades: (1) dataset efectiu acotat a 956 mostres; (2) dependència de qualitat de registre; (3) risc de \emph{drift} amb canvis operatius \cite{lu2020drift}; (4) lectura causal limitada per natura observacional; (5) bretxa d'implementació per integració GMP. El model és un \emph{decision support system}, no substitut de revisió experta.
