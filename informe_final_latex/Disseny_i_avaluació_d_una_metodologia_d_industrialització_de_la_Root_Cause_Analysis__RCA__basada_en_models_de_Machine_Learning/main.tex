@@ -68,14 +68,14 @@
 \parbox{0.915\textwidth}
 {\sffamily
 \textbf{Resum--}
-Aquest treball proposa i valida una metodologia d'industrialització de la Root Cause Analysis (RCA) basada en models de Machine Learning interpretables per a entorns farmacèutics regulats. La proposta s'estructura en cinc capes: anàlisi exploratòria, modelització predictiva, estratègia \emph{filter-then-interact} amb Explainable Boosting Machines (EBM), capa d'explicabilitat i capa de validació i industrialització. El conjunt de dades utilitzat per a la modelització inclou 956 mostres i 56 variables originals, amb validació creuada de 5 folds i criteris de robustesa orientats a ús operatiu. Els resultats mostren una millora progressiva respecte al baseline Lasso: reducció del 15.6\% en MAE i del 16.9\% en RMSE en la millor configuració de Fase 4. La configuració Robust (Leaf=10) obté el millor equilibri global (MAE = 0.950, RMSE = 1.368, R² = 0.422), mantenint estabilitat entre folds i facilitant la priorització de factors crítics en RCA. Com a contribució principal, el treball demostra que una estratègia EBM interpretable-by-design permet combinar rendiment predictiu, traçabilitat i utilitat operativa, i constitueix una base sòlida per a desplegament progressiu en entorns GMP/QMS amb monitoratge de \emph{drift} i governança de cicle de vida del model.
+Aquest treball proposa i valida una metodologia d'industrialització de la Root Cause Analysis (RCA) basada en models de Machine Learning interpretables per a entorns farmacèutics regulats. La proposta s'estructura en cinc capes: anàlisi exploratòria, modelització predictiva, estratègia \emph{filter-then-interact} amb Explainable Boosting Machines (EBM), capa d'explicabilitat i capa de validació i industrialització. El conjunt de dades utilitzat per a la modelització inclou 956 mostres i 56 variables originals, amb validació creuada de 5 folds i criteris de robustesa orientats a ús operatiu. Els resultats mostren una millora progressiva respecte al baseline Lasso: reducció del 15.6\% en MAE i del 16.9\% en RMSE en la millor configuració de Fase 4. La configuració Robust (Leaf=10) obté el millor equilibri global (MAE = 0.950, RMSE = 1.368, R² = 0.422), mantenint estabilitat entre folds i facilitant la priorització de factors crítics en RCA. Com a contribució principal, el treball demostra que una estratègia EBM interpretable-by-design permet combinar rendiment predictiu, traçabilitat i utilitat operativa, i constitueix una base sòlida per a desplegament progressiu en entorns GMP amb monitoratge de \emph{drift} i governança de cicle de vida del model.
 \\
 \\
 \textbf{Paraules clau-- } Root Cause Analysis, Explainable Boosting Machine, interpretabilitat, validació creuada, industrialització, qualitat farmacèutica.\\
 \\
 \bigskip
 \\
-\textbf{Abstract--} This work proposes and validates an industrialisation methodology for Root Cause Analysis (RCA) based on interpretable Machine Learning models for regulated pharmaceutical environments. The proposal is structured in five layers: exploratory analysis, predictive modelling, a \emph{filter-then-interact} strategy with Explainable Boosting Machines (EBM), an explainability layer and a validation and industrialisation layer. The dataset used for modelling includes 956 samples and 56 original variables, with 5-fold cross-validation and robustness criteria oriented to operational use. Results show progressive improvement over the Lasso baseline: 15.6\% reduction in MAE and 16.9\% in RMSE in the best Phase 4 configuration. The Robust (Leaf=10) configuration achieves the best overall balance (MAE = 0.950, RMSE = 1.368, R² = 0.422), maintaining stability across folds and facilitating the prioritisation of critical factors in RCA. As a main contribution, the work demonstrates that an interpretable-by-design EBM strategy can combine predictive performance, traceability and operational utility, constituting a solid foundation for progressive deployment in GMP/QMS environments with drift monitoring and model lifecycle governance.
+\textbf{Abstract--} This work proposes and validates an industrialisation methodology for Root Cause Analysis (RCA) based on interpretable Machine Learning models for regulated pharmaceutical environments. The proposal is structured in five layers: exploratory analysis, predictive modelling, a \emph{filter-then-interact} strategy with Explainable Boosting Machines (EBM), an explainability layer and a validation and industrialisation layer. The dataset used for modelling includes 956 samples and 56 original variables, with 5-fold cross-validation and robustness criteria oriented to operational use. Results show progressive improvement over the Lasso baseline: 15.6\% reduction in MAE and 16.9\% in RMSE in the best Phase 4 configuration. The Robust (Leaf=10) configuration achieves the best overall balance (MAE = 0.950, RMSE = 1.368, R² = 0.422), maintaining stability across folds and facilitating the prioritisation of critical factors in RCA. As a main contribution, the work demonstrates that an interpretable-by-design EBM strategy can combine predictive performance, traceability and operational utility, constituting a solid foundation for progressive deployment in GMP environments with drift monitoring and model lifecycle governance.
 \\
 \\
 \textbf{Keywords-- } Root Cause Analysis, Explainable Boosting Machine, interpretability, cross-validation, industrialisation, pharmaceutical quality.\\
@@ -127,14 +127,7 @@ Vull agrair al meu tutor Joan Piedrafita el suport i orientació durant tot el p
 \onecolumn
 \section*{Apèndix}
 
-\subsection*{A1. Planificació temporal del projecte}
-
-% TODO: Inserir diagrama de Gantt
-\begin{center}
-\textit{[Diagrama de Gantt -- pendent d'inserir]}
-\end{center}
-
-\subsection*{A2. Diagrama del procés RCA}
+\subsection*{A1. Diagrama del procés RCA}
 
 \begin{figure}[H]
     \centering

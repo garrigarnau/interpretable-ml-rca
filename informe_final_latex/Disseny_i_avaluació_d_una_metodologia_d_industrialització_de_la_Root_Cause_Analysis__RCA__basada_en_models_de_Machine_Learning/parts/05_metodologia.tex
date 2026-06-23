@@ -49,7 +49,7 @@ Les variables més rellevants identificades pel Lasso inclouen pes de fraccions 
 \subsection{Estratègia filter-then-interact amb EBM}
 \label{subsec:estrategia_filter_then_interact}
 
-L'estratègia \emph{filter-then-interact} captura efectes principals i interaccions en tres fases progressives, minimitzant overfitting i maximitzant interpretabilitat.
+L'estratègia \emph{filter-then-interact} captura efectes principals i interaccions en tres fases progressives, minimitzant overfitting i maximitzant interpretabilitat. Aquesta aproximació s'alinea amb la metodologia proposada per Lou et al.~\cite{lou2013_ga2m} per als models GA$^2$M, on s'aïllen primer els efectes principals per garantir l'estabilitat de les shape functions i, posteriorment, s'activen les interaccions de parella més significatives de manera controlada, tal com van demostrar Caruana et al.~\cite{caruana2015_intelligible} en entorns on la transparència regulatòria és crítica.
 
 \subsubsection{Fase 1: Identificació d'efectes principals}
 \label{subsubsec:fase1_efectes_principals}
